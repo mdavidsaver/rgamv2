@@ -13,10 +13,6 @@ include $(TOP)/configure/CONFIG
 #----------------------------------------------------
 # Create and install (or just install)
 # databases, templates, substitutions like this
-DB += rga.template
-##DB += asyn_rga.template
-DB += rga_asyn.template
-##DB += rga_asyn_test.template
 DB += rgaGroup.template
 DB += rgamv2.template
 DB += asynRgaRec.template

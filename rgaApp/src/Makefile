@@ -26,9 +26,6 @@ DBD += rgaInclude.dbd
 
 # The following are compiled and added to the support library
 rgamv2_SRCS_Linux   +=rgamv2.cpp
-rgamvplus_SRCS_vxWorks +=devWaveform.c
-
-rgamvplus_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
 
 # We need to link against the EPICS Base libraries
 rgamv2_LIBS += $(EPICS_BASE_IOC_LIBS)
