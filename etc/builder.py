@@ -10,8 +10,7 @@ except ImportError:
     print "# No streamDevice, rga mv plus object will not be available"
 else:
     class rga(AutoSubstitution, AutoProtocol):
-        ProtocolFiles = ["rga.protocol"]
-        TemplateFile = 'rga.template'
+        pass
 
 class _rgamv2Template(AutoSubstitution):
     TemplateFile = 'rgamv2.template'
