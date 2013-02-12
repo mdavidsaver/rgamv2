@@ -1,0 +1,30 @@
+# simulation_rga.sub
+# Initialise templates for a simulated RGA
+# Pete Owens - 24/6/04
+#
+# Based on rga.sub 
+#
+# substitutions:
+# device  - device name
+# port    - serial port (steam device code ie /ty/0/1 => ty_0_1)
+# channel - RGA channel number (port number of PC comm port 1-4)
+#################################################################
+# Controller
+#
+file ../db/simulation_rga.template
+{
+pattern {    device   ,  port  , channel }
+        { TS-VA-RGA-01, ty_71_6,    1    }
+        { TS-VA-RGA-02, ty_71_6,    2    }
+        { TS-VA-RGA-03, ty_71_6,    3    }
+        { TS-VA-RGA-04, ty_71_6,    4    }
+}
+file ../db/rgaGroup.template
+{
+pattern {    device   ,  rga1, rga2, rga3, rga4, rga5, rga6, rga7, rga8 }
+        { TS-VA-RGA-99, 
+          TS-VA-RGA-01, TS-VA-RGA-02, TS-VA-RGA-03,  TS-VA-RGA-04,  
+          TS-VA-RGA-01, TS-VA-RGA-02, TS-VA-RGA-03,  TS-VA-RGA-04  }
+}
+
+#################################################################
