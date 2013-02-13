@@ -4,13 +4,6 @@ from iocbuilder.arginfo import *
 from iocbuilder.modules.asyn import Asyn, AsynIP
 from iocbuilder import AutoSubstitution
 
-try:
-    from iocbuilder.modules.streamDevice import AutoProtocol
-except ImportError:
-    print "# No streamDevice, rga mv plus object will not be available"
-else:
-    class rga(AutoSubstitution, AutoProtocol):
-        pass
 
 class _rgamv2Template(AutoSubstitution):
     TemplateFile = 'rgamv2.template'
