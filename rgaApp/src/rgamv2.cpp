@@ -1845,9 +1845,9 @@ asynStatus MV2::readInt32(asynUser *pasynUser, epicsInt32 * value)
     }
     else if (reason == P_MODE)
     {
-        // TODO - Find out what needs to go here e.g. (headSta_ == LOCAL_CONTROL) ? 1 : 0;
         // as far as can tell this doesn't do anything in MVPlus except return 0 so do that for now.
-        newValue = 0; // (headSta_ == LOCAL_CONTROL) ? 1 : 0;
+        // leave for now for compatibility with MVPlus panels
+        newValue = 0;
     }
     else if (reason == P_CON)
     {
@@ -2017,7 +2017,6 @@ double MV2::AnalogInput::getValue(unsigned input)
     }
     return value;
 }
-
 
 bool MV2::AnalogInput::setValue(unsigned input, double value)
 {
