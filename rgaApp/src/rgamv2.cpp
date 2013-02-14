@@ -289,10 +289,20 @@ private:
     bool isBarchart(HeadState sta);
     bool isScanMode(HeadState sta);
 
-    void analogInputInit(unsigned numInputs);
-    bool analogInputHasValue(unsigned input);
-    double analogInputGetValue(unsigned input);
-    bool analogInputSetValue(unsigned input, double value);
+    class AnalogInputs
+    {
+    public: 
+        void analogInputInit(unsigned numInputs);
+        bool analogInputHasValue(unsigned input);
+        double analogInputGetValue(unsigned input);
+        bool analogInputSetValue(unsigned input, double value);
+
+    private:
+        std::vector<double> inputs_;
+        std::vector<bool> inputsValid_;
+    };
+
+    AnalogInputs analogInputs_;
 
     const static int numFilaments_ = 2;
     const static int numDetectorIndexes_ = 4;
@@ -361,9 +371,6 @@ private:
     double sumP_;
 
     double totalPressure_;
-
-    std::vector<double> analogInputs_;
-    std::vector<bool> analogInValid_;
 
 
     class MainThread: public epicsThreadRunable
@@ -1994,33 +2001,33 @@ std::string MV2::getParameterName(int reason)
 
 void MV2::analogInputInit(unsigned numInputs)
 {
-    analogInputs_.resize(numInputs);
-    analogInValid_.resize(numInputs);
+    values_.resize(numInputs);
+    inputsValid_.resize(numInputs);
 }
 
-bool MV2::analogInputHasValue(unsigned input)
+bool MV2::analogInput::hasValue(unsigned input)
 {
-    return (input < analogInValid_.size()) && analogInValid_[input];
+    return (input < inputsValid_.size()) && inputsValid_[input];
 }
 
-double MV2::analogInputGetValue(unsigned input)
+double MV2::analogInput::getValue(unsigned input)
 {
     double value = 0.0;
-    if (input < analogInputs_.size())
+    if (input < inputs_.size())
     {
-        value = analogInputs_[input];
+        value = values_[input];
     }
     return value;
 }
 
 
-bool MV2::analogInputSetValue(unsigned input, double value)
+bool MV2::analogInput::setValue(unsigned input, double value)
 {
-    bool ok = (input < analogInputs_.size()) && (input< analogInValid_.size());
+    bool ok = (input < values_.size()) && (input < inputsValid_.size());
     if (ok)
     {
-        analogInputs_[input] = value;
-        analogInValid_[input] = true;
+        values_[input] = value;
+        inputsValid_[input] = true;
     }
     return ok;
 }
