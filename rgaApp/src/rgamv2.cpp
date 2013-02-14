@@ -374,8 +374,6 @@ private:
 
     AnalogInput analogInput_;
 
-    double totalPressure_;
-
 
     class MainThread: public epicsThreadRunable
     {
@@ -453,8 +451,7 @@ MV2::MV2(char * name, char *address)
     filCon_(FC_OFF),
     currentData_(NO_DATA),
     currentDetector_(0),
-    sumP_(0.0),
-    totalPressure_(0.0)
+    sumP_(0.0)
 {
     // Uncomment this line to enable asyn trace flow and error
     //pasynTrace->setTraceMask(pasynUserSelf, 0xFF);
@@ -1186,14 +1183,6 @@ void MV2::processReceived()
                 {
                     std::string notification(buffer);
                     processFilamentStatus(notification);
-                }
-                else if (event == "TotalPressure")
-                {
-                    float totalPressure = 0.0;
-                    sscanf(buffer, "TotalPressure %g\r\n  ", &totalPressure);
-                    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-                        "Total Pressure %g\n", totalPressure);
-                    totalPressure_ = totalPressure;
                 }
                 else if (event == "StartingScan")
                 {
