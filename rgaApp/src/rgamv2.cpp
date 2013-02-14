@@ -289,21 +289,6 @@ private:
     bool isBarchart(HeadState sta);
     bool isScanMode(HeadState sta);
 
-    class AnalogInputs
-    {
-    public: 
-        void analogInputInit(unsigned numInputs);
-        bool analogInputHasValue(unsigned input);
-        double analogInputGetValue(unsigned input);
-        bool analogInputSetValue(unsigned input, double value);
-
-    private:
-        std::vector<double> inputs_;
-        std::vector<bool> inputsValid_;
-    };
-
-    AnalogInputs analogInputs_;
-
     const static int numFilaments_ = 2;
     const static int numDetectorIndexes_ = 4;
     const static unsigned numAnalogInputs_ = 5;
@@ -369,6 +354,21 @@ private:
     ScanDataType currentData_;
     unsigned currentDetector_;
     double sumP_;
+
+    class AnalogInput
+    {
+    public: 
+        void init(unsigned numInputs);
+        bool hasValue(unsigned input);
+        double getValue(unsigned input);
+        bool setValue(unsigned input, double value);
+
+    private:
+        std::vector<double> values_;
+        std::vector<bool> inputsValid_;
+    };
+
+    AnalogInput analogInput_;
 
     double totalPressure_;
 
@@ -486,7 +486,7 @@ MV2::MV2(char * name, char *address)
     createParam("MODE", asynParamInt32, &P_MODE);
     createParam("SETMODE", asynParamInt32, &P_SETMODE);
 
-    analogInputInit(numAnalogInputs_);
+    analogInput_.init(numAnalogInputs_);
     scanData_.resize(lastIndex(ANALOG_200)+1);
 
 #if PEAK_JUMP_SUPPORT
@@ -1166,7 +1166,7 @@ void MV2::processReceived()
                     const int NUM_SCANNED_EXPECTED = 2;
                     if (sscanf(buffer, "AnalogInput %u %lg", &index, &ai) == NUM_SCANNED_EXPECTED)
                     {
-                        if (!analogInputSetValue(index, ai))
+                        if (!analogInput_.setValue(index, ai))
                         {
                             asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "AnalogInput - invalid input number\n%s\n", buffer);
                         }
@@ -1676,9 +1676,9 @@ double MV2::totalPressure()
     const size_t TOTAL_PRESSURE_INPUT = 0;
     double pressure = 0.0;
 
-    if (analogInputHasValue(TOTAL_PRESSURE_INPUT))
+    if (analogInput_.hasValue(TOTAL_PRESSURE_INPUT))
     {
-        double ai = analogInputGetValue(TOTAL_PRESSURE_INPUT);
+        double ai = analogInput_.getValue(TOTAL_PRESSURE_INPUT);
         pressure = MKS937::voltageToMbar(ai);
     }
     return pressure;
@@ -1999,21 +1999,21 @@ std::string MV2::getParameterName(int reason)
 }
 
 
-void MV2::analogInputInit(unsigned numInputs)
+void MV2::AnalogInput::init(unsigned numInputs)
 {
     values_.resize(numInputs);
     inputsValid_.resize(numInputs);
 }
 
-bool MV2::analogInput::hasValue(unsigned input)
+bool MV2::AnalogInput::hasValue(unsigned input)
 {
     return (input < inputsValid_.size()) && inputsValid_[input];
 }
 
-double MV2::analogInput::getValue(unsigned input)
+double MV2::AnalogInput::getValue(unsigned input)
 {
     double value = 0.0;
-    if (input < inputs_.size())
+    if (input < values_.size())
     {
         value = values_[input];
     }
@@ -2021,7 +2021,7 @@ double MV2::analogInput::getValue(unsigned input)
 }
 
 
-bool MV2::analogInput::setValue(unsigned input, double value)
+bool MV2::AnalogInput::setValue(unsigned input, double value)
 {
     bool ok = (input < values_.size()) && (input < inputsValid_.size());
     if (ok)
