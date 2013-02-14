@@ -256,6 +256,7 @@ private:
 
     void processTask();
     void startTask(Task task);
+    void commandToIdle();
 
     void sensors();
     void select();
@@ -750,11 +751,16 @@ void MV2::stateMachine()
 void MV2::changeState(SmState state)
 {
     state_ = state;
+    commandToIdle();
+}
 
+void MV2::commandToIdle()
+{
     cmdState_ = CMD_IDLE;
     cmd_="";
     cmdNumber_ = 0;
 }
+
 
 void MV2::processTask()
 {
@@ -771,10 +777,7 @@ void MV2::processTask()
         taskState_ = TS_IDLE;
         taskErrorStatus_ = TE_OK;
         task_ = NO_TASK;
-
-        cmdState_ = CMD_IDLE;
-        cmd_="";
-        cmdNumber_ = 0;
+        commandToIdle();
 
         return;
 
