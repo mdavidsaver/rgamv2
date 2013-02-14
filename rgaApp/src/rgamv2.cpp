@@ -1468,6 +1468,9 @@ void MV2::scanComplete()
     asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
         "Sizes %u %u\n", barResultsData_.size(), scanData_.size());
 
+    // cut-off partial pressures below threshold as per MV Plus.
+    const double MIN_PRESSURE = 1.0e-12;
+
     switch (headState_.status())
     {
     case BARCHART_50:
@@ -1475,7 +1478,7 @@ void MV2::scanComplete()
     case BARCHART_200:
         for (size_t index = 0; index < barResultsData_.size(); ++index)
         {
-            barResultsData_[index] = std::max(scanData_[index], 1.0e-12);
+            barResultsData_[index] = std::max(scanData_[index], MIN_PRESSURE);
             asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
                  "%u %lg %lg\n", index, scanData_[index], barResultsData_[index]);
             sumP_ += barResultsData_[index];
@@ -1503,7 +1506,7 @@ void MV2::scanComplete()
 
             std::copy(scanData_.begin(), scanData_.end(), analogResultsData_.begin());
 
-            barResultsData_[index] = std::max(result, 1.0e-12);
+            barResultsData_[index] = std::max(result, MIN_PRESSURE);
             asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
                  "%u %g %g\n", index, result, barResultsData_[index]);
             sumP_ += barResultsData_[index];
