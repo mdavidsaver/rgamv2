@@ -288,10 +288,15 @@ private:
 
     bool isBarchart(HeadState sta);
     bool isScanMode(HeadState sta);
- 
+
+    void analogInputInit(unsigned numInputs);
+    bool analogInputHasValue(unsigned input);
+    double analogInputGetValue(unsigned input);
+    bool analogInputSetValue(unsigned input, double value);
+
     const static int numFilaments_ = 2;
     const static int numDetectorIndexes_ = 4;
-    const static int numAnalogInputs_ = 5;
+    const static unsigned numAnalogInputs_ = 5;
 
     const static unsigned accuracy_ = 5;
     const static unsigned pointsPerPeak_ = 32;
@@ -359,6 +364,7 @@ private:
 
     std::vector<double> analogInputs_;
     std::vector<bool> analogInValid_;
+
 
     class MainThread: public epicsThreadRunable
     {
@@ -473,8 +479,7 @@ MV2::MV2(char * name, char *address)
     createParam("MODE", asynParamInt32, &P_MODE);
     createParam("SETMODE", asynParamInt32, &P_SETMODE);
 
-    analogInputs_.resize(numAnalogInputs_);
-    analogInValid_.resize(numAnalogInputs_);
+    analogInputInit(numAnalogInputs_);
     scanData_.resize(lastIndex(ANALOG_200)+1);
 
 #if PEAK_JUMP_SUPPORT
@@ -1149,26 +1154,19 @@ void MV2::processReceived()
                 }
                 else if (event == "AnalogInput")
                 {
-                    float ai = 0;
-                    size_t index = 0;
+                    double ai = 0;
+                    unsigned index = 0;
                     const int NUM_SCANNED_EXPECTED = 2;
-                    if (sscanf(buffer, "AnalogInput %d %g", &index, &ai) == NUM_SCANNED_EXPECTED)
+                    if (sscanf(buffer, "AnalogInput %u %lg", &index, &ai) == NUM_SCANNED_EXPECTED)
                     {
-                        if (index < analogInputs_.size())
+                        if (!analogInputSetValue(index, ai))
                         {
-                            analogInputs_[index] = ai;
-                            if (index < analogInputs_.size())
-                            {
-                                analogInValid_[index] = true;
-                            }
-                        }
-                        else
-                        {
-                            asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "AnalogInput invalid\n%s\n", buffer);
+                            asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "AnalogInput - invalid input number\n%s\n", buffer);
                         }
                     }
                     else
                     {
+                        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "AnalogInput invalid\n%s\n", buffer);
                     }
                 }
                 else if (event == "FilamentStatus")
@@ -1668,16 +1666,15 @@ bool MV2::isScanMode(HeadState sta)
 
 double MV2::totalPressure()
 {
-    const size_t tpInput = 0;
-    double totp = 0.0;
-    if (analogInValid_.size() >= 1)
+    const size_t TOTAL_PRESSURE_INPUT = 0;
+    double pressure = 0.0;
+
+    if (analogInputHasValue(TOTAL_PRESSURE_INPUT))
     {
-        if (analogInValid_[tpInput] && analogInputs_.size() >= 1)
-        {
-            totp = MKS937::voltageToMbar(analogInputs_[tpInput]);
-        }
+        double ai = analogInputGetValue(TOTAL_PRESSURE_INPUT);
+        pressure = MKS937::voltageToMbar(ai);
     }
-    return totp;
+    return pressure;
 }
 
 asynStatus MV2::writeInt32(asynUser *pasynUser, epicsInt32 value)
@@ -1994,6 +1991,39 @@ std::string MV2::getParameterName(int reason)
     return "Unkown";
 }
 
+
+void MV2::analogInputInit(unsigned numInputs)
+{
+    analogInputs_.resize(numInputs);
+    analogInValid_.resize(numInputs);
+}
+
+bool MV2::analogInputHasValue(unsigned input)
+{
+    return (input < analogInValid_.size()) && analogInValid_[input];
+}
+
+double MV2::analogInputGetValue(unsigned input)
+{
+    double value = 0.0;
+    if (input < analogInputs_.size())
+    {
+        value = analogInputs_[input];
+    }
+    return value;
+}
+
+
+bool MV2::analogInputSetValue(unsigned input, double value)
+{
+    bool ok = (input < analogInputs_.size()) && (input< analogInValid_.size());
+    if (ok)
+    {
+        analogInputs_[input] = value;
+        analogInValid_[input] = true;
+    }
+    return ok;
+}
 
 } // namespace rgamv2
 
