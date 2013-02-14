@@ -13,7 +13,7 @@
 #include <vector>
 
 
-#define PEAK_JUMP_SUPPORT 1
+#define PEAK_JUMP_SUPPORT 0
 
 #define NUM_PARAMS 232
 #define NUM_MASSES 200
@@ -165,7 +165,9 @@ private:
         BARCHART_100,
         BARCHART_200,
         ANALOG_200,
+#if PEAK_JUMP_SUPPORT
         PEAK_JUMP = 10
+#endif
     };
 
     enum ScanMode
@@ -256,6 +258,7 @@ private:
 
     void processTask();
     void startTask(Task task);
+
     void commandToIdle();
 
     void sensors();
