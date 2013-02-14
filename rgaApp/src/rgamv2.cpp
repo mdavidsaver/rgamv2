@@ -258,6 +258,7 @@ private:
 
     void processTask();
     void startTask(Task task);
+    void taskToIdle();
 
     void commandToIdle();
 
@@ -761,6 +762,13 @@ void MV2::commandToIdle()
     cmdNumber_ = 0;
 }
 
+void MV2::taskToIdle()
+{
+    taskState_ = TS_IDLE;
+    taskErrorStatus_ = TE_OK;
+    task_ = NO_TASK;
+    commandToIdle();
+}
 
 void MV2::processTask()
 {
@@ -774,11 +782,7 @@ void MV2::processTask()
         return;
 
     case TS_COMPLETE:
-        taskState_ = TS_IDLE;
-        taskErrorStatus_ = TE_OK;
-        task_ = NO_TASK;
-        commandToIdle();
-
+        taskToIdle();
         return;
 
     case TS_BUSY:
@@ -914,9 +918,7 @@ void MV2::error()
     busyCounter_ = 0;
     commsFail_ = true;
 
-    taskState_= TS_IDLE;
-    taskErrorStatus_= TE_OK;
-    task_ = NO_TASK; 
+    taskToIdle();
 
     changeState(RELEASE_SENSOR);
 }
