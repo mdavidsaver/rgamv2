@@ -1790,6 +1790,7 @@ asynStatus MV2::writeInt32(asynUser *pasynUser, epicsInt32 value)
     }
     else
     {
+        status = asynError;
         asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "UNKNOWN(%d)\n", reason);
     }
 
