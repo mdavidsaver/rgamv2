@@ -1290,13 +1290,8 @@ void MV2::processFilamentStatus(const std::string & notification)
     unsigned filNum = 0;
 
     char filstaBuffer[100];
-    filstaBuffer[sizeof(filstaBuffer)-1] = 0;
-
     char tripBuffer[100];
-    tripBuffer[sizeof(tripBuffer)-1] = 0;
-
     char exTripStateBuffer[100];
-    exTripStateBuffer[sizeof(exTripStateBuffer)-1] = 0;
 
     int numScanned = sscanf(notification.c_str(),
 "FilamentStatus  %u %s\r\n\
@@ -1344,25 +1339,15 @@ void MV2::processFilamentStatus(const std::string & notification)
         asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
             "FilamentStatus invalid:\n%s\n", notification.c_str());
     }
-
-
 }
 
 void MV2::processFilamentInfo(const std::string & notification)
 {
     // set filsta
     unsigned filNum = 0;
-
     char filstaBuffer[100];
-    filstaBuffer[sizeof(filstaBuffer)-1] = 0;
-
     char tripBuffer[100];
-    tripBuffer[sizeof(tripBuffer)-1] = 0;
-
     char exTripStateBuffer[100];
-    exTripStateBuffer[sizeof(exTripStateBuffer)-1] = 0;
-
-
 
     int numScanned = sscanf(notification.c_str(), "FilamentInfo  OK\r\n\
   SummaryState  %s\r\n\
