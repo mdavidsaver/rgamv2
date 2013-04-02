@@ -944,6 +944,11 @@ void MV2::init()
 void MV2::controlSensor()
 {
     cmds.push_back("Control EPICS R3.14.11");
+    cmds.push_back("FilamentInfo");
+    //cmds.push_back("EGains");
+    cmds.push_back("SourceInfo 0");     // These 2 commands seem to be necessary
+    cmds.push_back("DetectorInfo 0");   // to workaround VRGA crashing
+    cmds.push_back("MultiplierInfo");
     cmds.push_back("AnalogInputInterval 0 500000");
     cmds.push_back("AnalogInputEnable 0 true");
     cmds.push_back("MeasurementRemoveAll");
