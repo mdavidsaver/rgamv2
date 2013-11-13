@@ -58,7 +58,7 @@ record(mbbi, "$(device):HEADSTA")
     field(FVST, "Barchart 1-50")
     field(SXST, "Barchart 1-100")
     field(SVST, "Barchart 1-200")
-    field(EIST, "Analog 1-200")
+    #field(EIST, "Analog 1-200")
     #field(TEST, "Peak Jump")
     field(NIST, "No RGA")
     field(UNSV, "MAJOR")
@@ -74,6 +74,9 @@ record(mbbi, "$(device):HEADSTA")
     field(NISV, "INVALID")
     #field(TESV, "NO_ALARM")
 }
+#
+#% archiver 10 Monitor
+#% controldesk Head Status scon
 #
 record(mbbo, "$(device):CON")
 {
@@ -100,7 +103,7 @@ record(mbbo, "$(device):CON")
     field(FVST, "Barchart 1-50")
     field(SXST, "Barchart 1-100")
     field(SVST, "Barchart 1-200")
-    field(EIST, "Analog 1-200")
+    #field(EIST, "Analog 1-200")
     #field(NIST, "No RGA")
     #field(NISV, "INVALID")
     #field(TEST, "Peak Jump")
@@ -609,6 +612,9 @@ record(ai, "$(device):BAR:M1")
     field(PINI, "YES")
 }
 #
+#% archiver 10 Monitor
+#% controldesk H2 readback
+#
 record(ai, "$(device):BAR:M2")
 {
     field(DESC, "H2")
@@ -638,6 +644,9 @@ record(ai, "$(device):BAR:M3")
     field(LOPR, "0")
     field(PINI, "YES")
 }
+#
+#% archiver 10 Monitor
+#% controldesk He readback
 #
 record(ai, "$(device):BAR:M4")
 {
@@ -789,6 +798,9 @@ record(ai, "$(device):BAR:M13")
     field(PINI, "YES")
 }
 #
+#% archiver 10 Monitor
+#% controldesk CH2/N2++ readback
+#
 record(ai, "$(device):BAR:M14")
 {
     field(DESC, "CH2/N2++")
@@ -803,6 +815,9 @@ record(ai, "$(device):BAR:M14")
     field(LOPR, "0")
     field(PINI, "YES")
 }
+#
+#% archiver 10 Monitor
+#% controldesk CH3 readback
 #
 record(ai, "$(device):BAR:M15")
 {
@@ -819,6 +834,9 @@ record(ai, "$(device):BAR:M15")
     field(PINI, "YES")
 }
 #
+#% archiver 10 Monitor
+#% controldesk CH4 readback
+#
 record(ai, "$(device):BAR:M16")
 {
     field(DESC, "CH4")
@@ -834,6 +852,9 @@ record(ai, "$(device):BAR:M16")
     field(PINI, "YES")
 }
 #
+#% archiver 10 Monitor
+#% controldesk OH readback
+#
 record(ai, "$(device):BAR:M17")
 {
     field(DESC, "OH")
@@ -848,6 +869,9 @@ record(ai, "$(device):BAR:M17")
     field(LOPR, "0")
     field(PINI, "YES")
 }
+#
+#% archiver 10 Monitor
+#% controldesk H20 readback
 #
 record(ai, "$(device):BAR:M18")
 {
@@ -999,6 +1023,9 @@ record(ai, "$(device):BAR:M27")
     field(PINI, "YES")
 }
 #
+#% archiver 10 Monitor
+#% controldesk N2/CO readback
+#
 record(ai, "$(device):BAR:M28")
 {
     field(DESC, "N2/CO")
@@ -1058,6 +1085,9 @@ record(ai, "$(device):BAR:M31")
     field(LOPR, "0")
     field(PINI, "YES")
 }
+#
+#% archiver 10 Monitor
+#% controldesk O2 readback
 #
 record(ai, "$(device):BAR:M32")
 {
@@ -1179,6 +1209,9 @@ record(ai, "$(device):BAR:M39")
     field(PINI, "YES")
 }
 #
+#% archiver 10 Monitor
+#% controldesk Ar readback
+#
 record(ai, "$(device):BAR:M40")
 {
     field(DESC, "AR")
@@ -1238,6 +1271,9 @@ record(ai, "$(device):BAR:M43")
     field(LOPR, "0")
     field(PINI, "YES")
 }
+#
+#% archiver 10 Monitor
+#% controldesk CO2 readback
 #
 record(ai, "$(device):BAR:M44")
 {
@@ -1613,6 +1649,9 @@ record(ai, "$(device):BAR:M68")
     field(LOPR, "0")
     field(PINI, "YES")
 }
+#
+#% archiver 10 Monitor
+#% controldesk Ar readback
 #
 record(ai, "$(device):BAR:M69")
 {
@@ -3604,6 +3643,8 @@ record(calc, "$(device):LOG:M1")
     field(LOPR, "-11")
 }
 #
+#% archiver 10 Monitor
+#
 record(calc, "$(device):LOG:M2")
 {
     field(DESC, "Mass 2")
@@ -3623,6 +3664,8 @@ record(calc, "$(device):LOG:M3")
     field(HOPR, "-2")
     field(LOPR, "-11")
 }
+#
+#% archiver 10 Monitor
 #
 record(calc, "$(device):LOG:M4")
 {
@@ -3724,6 +3767,8 @@ record(calc, "$(device):LOG:M13")
     field(LOPR, "-11")
 }
 #
+#% archiver 10 Monitor
+#
 record(calc, "$(device):LOG:M14")
 {
     field(DESC, "Mass 14")
@@ -3733,6 +3778,8 @@ record(calc, "$(device):LOG:M14")
     field(HOPR, "-2")
     field(LOPR, "-11")
 }
+#
+#% archiver 10 Monitor
 #
 record(calc, "$(device):LOG:M15")
 {
@@ -3744,6 +3791,8 @@ record(calc, "$(device):LOG:M15")
     field(LOPR, "-11")
 }
 #
+#% archiver 10 Monitor
+#
 record(calc, "$(device):LOG:M16")
 {
     field(DESC, "Mass 16")
@@ -3754,6 +3803,8 @@ record(calc, "$(device):LOG:M16")
     field(LOPR, "-11")
 }
 #
+#% archiver 10 Monitor
+#
 record(calc, "$(device):LOG:M17")
 {
     field(DESC, "Mass 17")
@@ -3763,6 +3814,8 @@ record(calc, "$(device):LOG:M17")
     field(HOPR, "-2")
     field(LOPR, "-11")
 }
+#
+#% archiver 10 Monitor
 #
 record(calc, "$(device):LOG:M18")
 {
@@ -3864,6 +3917,8 @@ record(calc, "$(device):LOG:M27")
     field(LOPR, "-11")
 }
 #
+#% archiver 10 Monitor
+#
 record(calc, "$(device):LOG:M28")
 {
     field(DESC, "Mass 28")
@@ -3903,6 +3958,8 @@ record(calc, "$(device):LOG:M31")
     field(HOPR, "-2")
     field(LOPR, "-11")
 }
+#
+#% archiver 10 Monitor
 #
 record(calc, "$(device):LOG:M32")
 {
@@ -3984,6 +4041,8 @@ record(calc, "$(device):LOG:M39")
     field(LOPR, "-11")
 }
 #
+#% archiver 10 Monitor
+#
 record(calc, "$(device):LOG:M40")
 {
     field(DESC, "Mass 40")
@@ -4023,6 +4082,8 @@ record(calc, "$(device):LOG:M43")
     field(HOPR, "-2")
     field(LOPR, "-11")
 }
+#
+#% archiver 10 Monitor
 #
 record(calc, "$(device):LOG:M44")
 {
@@ -4273,6 +4334,8 @@ record(calc, "$(device):LOG:M68")
     field(HOPR, "-2")
     field(LOPR, "-11")
 }
+#
+#% archiver 10 Monitor
 #
 record(calc, "$(device):LOG:M69")
 {

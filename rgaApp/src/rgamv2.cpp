@@ -6,6 +6,7 @@
 #include <epicsTimer.h>
 #include <epicsMath.h>
 #include <iocsh.h>
+#include <string.h>
 
 #include <algorithm>
 #include <climits>
