@@ -462,16 +462,16 @@ MV2::MV2(char * name, char *address)
     // Uncomment this line to enable asyn trace flow and error
     //pasynTrace->setTraceMask(pasynUserSelf, 0xFF);
 
-    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "Constructor\n");
+    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) Constructor\n", portName);
 
     for (int i = 0; i < NUM_MASSES; ++i)
     {
-        char name[40];
-        sprintf(name, "BARM%d", i+1);
+        char paramName[40];
+        sprintf(paramName, "BARM%d", i+1);
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "Create param %s\n", name); 
-        createParam(name, asynParamFloat64, &P_BARM[i]);
-    } 
+            "(%s) Create param %s\n", portName, paramName); 
+        createParam(paramName, asynParamFloat64, &P_BARM[i]);
+    }
 
     createParam("SUMP", asynParamFloat64, &P_SUMP);
     createParam("TOTP", asynParamInt32, &P_TOTP);
@@ -546,8 +546,8 @@ void MV2::mainRun()
 void MV2::stateMachine()
 {
     asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-        "(%s)SM St: %d tsk: %d ts:%d te:%d comms:%s\n",
-        port_.c_str(), state_, task_, taskState_, taskErrorStatus_, !commsFail_ ? "Y" : "N");
+        "(%s) SM St: %d tsk: %d ts:%d te:%d comms:%s\n",
+        portName, state_, task_, taskState_, taskErrorStatus_, !commsFail_ ? "Y" : "N");
 
     if (taskState_ != TS_BUSY)
     {
@@ -575,7 +575,7 @@ void MV2::stateMachine()
 
         if (taskErrorStatus_ == TE_CMD_TIMEOUT)
         {
-            asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "TIMEOUT ERROR\n");
+            asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) TIMEOUT ERROR\n", portName);
             error();
             epicsThreadSleep(1.0);
             return;
@@ -583,7 +583,7 @@ void MV2::stateMachine()
 
         if (taskErrorStatus_ == TE_ASYN_ERROR)
         {
-            asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "ASYN ERROR\n");
+            asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "(%s) ASYN ERROR\n", portName);
             error();
             epicsThreadSleep(1.0);
             return;
@@ -681,7 +681,7 @@ void MV2::stateMachine()
                     headState_.setValue(LOCAL_CONTROL);
                     if (scheduleGetInfo_)
                     {
-                        asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "SCHEDULE TASK\n");
+                        asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) SCHEDULE TASK\n", portName);
                         startTask(GET_INFO);
                     }
                 }
@@ -694,8 +694,9 @@ void MV2::stateMachine()
 
         case IN_CONTROL:
             asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-                "(%s)SM InCrtl con: %d hdsta: %d scan: %s\n",
-                port_.c_str(), headState_.control(), headState_.status(), (scanning_ ? "yes" : "no"));
+                "(%s) SM InCrtl con: %d hdsta: %d scan: %s\n",
+                portName, headState_.control(), headState_.status(),
+                (scanning_ ? "yes" : "no"));
 
             if (taskState_ == TS_IDLE)
             {
@@ -724,7 +725,7 @@ void MV2::stateMachine()
                 }
                 else if (scheduleGetInfo_)
                 {
-                    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "SCHEDULE TASK\n");
+                    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) SCHEDULE TASK\n", portName);
                     startTask(GET_INFO);
                 }
             }
@@ -778,8 +779,8 @@ void MV2::taskToIdle()
 void MV2::processTask()
 {
     asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-        "(%s) tsk %d ts:%d te:%d no:%d c:%s\n",
-         port_.c_str(), task_, taskState_, taskErrorStatus_, cmdNumber_, cmd_.c_str());
+        "(%s)  tsk %d ts:%d te:%d no:%d c:%s\n",
+         portName, task_, taskState_, taskErrorStatus_, cmdNumber_, cmd_.c_str());
 
     switch (taskState_)
     {
@@ -822,11 +823,12 @@ void MV2::processTask()
         }
         else
         {
-            asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "BUSY!\n");
+            asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) BUSY!\n", portName);
             const unsigned BUSY_CTR_LIMIT = 10;
             if (busyCounter_ > BUSY_CTR_LIMIT)
             {
-                asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "BUSY CTR LIMIT REACHED - ERROR!\n");
+                asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+                    "(%s) BUSY CTR LIMIT REACHED - ERROR!\n", portName);
                 taskState_ = TS_COMPLETE;
                 taskErrorStatus_ = TE_CMD_TIMEOUT;
                 return;
@@ -902,15 +904,15 @@ asynStatus MV2::connect()
     if(status == asynSuccess) 
     {
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "Connected to serial port=%s (%d) %p\n",
-                port_.c_str(), status, serialPortUser);
+            "(%s) Connected to serial port=%s (%d) %p\n",
+                portName, port_.c_str(), status, serialPortUser);
         pasynOctetSyncIO->setInputEos(serialPortUser, "\r\r", 2);
         pasynOctetSyncIO->setOutputEos(serialPortUser, "\r\n", 2);
     }
     else
     {
         asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-            "Failed to connect to serial port=%s error=%d\n", port_.c_str(), status);
+            "(%s) Failed to connect to serial port=%s error=%d\n", portName, port_.c_str(), status);
     }
 
     return status;
@@ -918,7 +920,7 @@ asynStatus MV2::connect()
 
 void MV2::error()
 {
-    asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "Error\n");
+    asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "(%s) Error\n", portName);
     scanning_ = false;
     busyCounter_ = 0;
     commsFail_ = true;
@@ -1082,7 +1084,7 @@ asynStatus MV2::sendCommand(const std::string & data, double timeout)
     size_t  nWrite = 0;
     cmdState_ = CMD_BUSY;
     cmd_ = data;
-    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "Send cmd: %s\n", cmd_.c_str());
+    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) Send cmd: %s\n", portName, cmd_.c_str());
 
     asynStatus status = pasynOctetSyncIO->write(serialPortUser, cmd_.c_str(), cmd_.length(), timeout, &nWrite);
     return status;
@@ -1091,7 +1093,7 @@ asynStatus MV2::sendCommand(const std::string & data, double timeout)
 
 void MV2::handleTimer()
 {
-    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "Scheduled get info\n");
+    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) Scheduled get info\n", portName);
 
     ++scheduleGetInfoCounter_;
     const unsigned GET_INFO_PERIOD = 3;
@@ -1116,16 +1118,15 @@ void MV2::processReceived()
         asynStatus status = pasynOctetSyncIO->read(serialPortUser, buffer, sizeof(buffer)-1, 0.1, &nRead, &eomReason);
         if(status == asynSuccess)
         {
-            asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "Read ok, %d bytes\n", nRead);
+            asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) Read ok, %d bytes\n", portName, nRead);
             buffer[nRead] = 0;
-            asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,buffer);
             char headerBuffer[SMALL_BUFFER_SIZE];
 
             const int HEADER_NUM_SCANNED_EXPECTED = 1;
             if (sscanf(buffer, "%s %*s", headerBuffer) == HEADER_NUM_SCANNED_EXPECTED)
             {
                 std::string event(headerBuffer);
-                asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "ASYN_EVENT: %s\n", event.c_str());
+                asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) ASYN_EVENT: %s\n", portName, event.c_str());
                 if (event == "MassReading")
                 {
                     float mass = 0;
@@ -1137,7 +1138,7 @@ void MV2::processReceived()
                     if (numScanned == NUM_SCANNED_EXPECTED)
                     {
                         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-                            "Mass Reading(%f)=%lg\n", mass, reading);
+                            "(%s) Mass Reading(%f)=%lg\n", portName, mass, reading);
 
                         handleMassReading(mass, reading);
                     }
@@ -1157,7 +1158,7 @@ void MV2::processReceived()
                     }
                     else
                     {
-                        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "Command status invalid\n%s\n", buffer);
+                        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "(%s) Command status invalid\n%s\n", portName, buffer);
                         cmdStatus_ = "Error";
                     }
                     cmdState_ = CMD_IDLE;
@@ -1174,12 +1175,12 @@ void MV2::processReceived()
                     {
                         if (!analogInput_.setValue(index, ai))
                         {
-                            asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "AnalogInput - invalid input number\n%s\n", buffer);
+                            asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "(%s) AnalogInput - invalid input number\n%s\n", portName, buffer);
                         }
                     }
                     else
                     {
-                        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "AnalogInput invalid\n%s\n", buffer);
+                        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "(%s) AnalogInput invalid\n%s\n", portName, buffer);
                     }
                 }
                 else if (event == "FilamentStatus")
@@ -1197,7 +1198,7 @@ void MV2::processReceived()
                     char okBuffer[SMALL_BUFFER_SIZE];
                     if (sscanf(buffer, "Sensors %s\r\n  ", okBuffer))
                     {
-                        asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "Status:%s\n", okBuffer);
+                        asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) Status:%s\n", portName, okBuffer);
                         if (strcmp(okBuffer, "OK") == 0)
                         {
                             sensors_.clear();
@@ -1212,20 +1213,22 @@ void MV2::processReceived()
                             if (numScanned == NUM_SCANNED_EXPECTED)
                             {
                                 asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-                                    "Sensor: State:%s SN:%s Name:%s\n", state, serialNumber, name);
+                                    "(%s) Sensor: State:%s SN:%s Name:%s\n", 
+                                    portName, state, serialNumber, name);
                                 SensorInfo sensor = { state, serialNumber, name };
                                 sensors_.push_back(sensor);
                             }
                             else
                             {
-                                asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "No valid sensor info\n");
+                                asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+                                    "(%s) No valid sensor info\n", portName);
                             }
                         }
                     }
                     else
                     {
                         asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-                            "Sensors command response not OK\n%s\n", buffer);
+                            "(%s) Sensors command response not OK\n%s\n", portName, buffer);
                     }
                 }
                 else if (event == "SensorState")
@@ -1240,13 +1243,14 @@ UserAddress %*s\r\n", state);
                     const int NUM_SCANNED_EXPECTED = 1;
                     if (numScanned == NUM_SCANNED_EXPECTED)
                     {
-                        asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "state %s\n", state);
+                        asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
+                            "(%s) state %s\n", portName, state);
                         sensors_[0].state = state;
                     }
                     else
                     {
                         asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-                            "Sensor State command response not OK\n%s\n", buffer);
+                            "(%s) Sensor State command response not OK\n%s\n", portName, buffer);
                     }
                 }
                 else if (event == "FilamentInfo")
@@ -1272,12 +1276,14 @@ void MV2::handleMassReading(float mass, double reading)
     if (index < scanData_.size())
     {
         scanData_[index] = reading; 
-        asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "ScanData[%u]:%lg\n", index, scanData_[index]);
+        asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
+            "(%s) ScanData[%u]:%lg\n", portName, index, scanData_[index]);
     }
     else
     {
         asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-            "Err:ScanData[%u]:%lg sd size:%u\n", index, reading, scanData_.size());
+            "(%s) Err:ScanData[%u]:%lg sd size:%u\n",
+            index, reading, scanData_.size(), portName);
     }
     if (index == lastIndex(headState_.status()))
     {
@@ -1307,8 +1313,8 @@ void MV2::processFilamentStatus(const std::string & notification)
     if (numScanned == NUM_SCANNED_EXPECTED)
     {
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "Filnum: %d State: %s Trip:%s exTripState:%s\n",
-             filNum, filstaBuffer, tripBuffer, exTripStateBuffer);
+            "(%s) Filnum: %d State: %s Trip:%s exTripState:%s\n",
+             portName, filNum, filstaBuffer, tripBuffer, exTripStateBuffer);
 
         FilamentState state = FS_FAILED;
 
@@ -1330,7 +1336,8 @@ void MV2::processFilamentStatus(const std::string & notification)
         }
         else
         {
-            asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "UNKOWN\n");
+            asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+                "(%s) UNKNOWN FILAMENT STATE\n", portName);
         }
 
         filamentStatus_ = FilamentStatus(filNum-1, state, tripBuffer);
@@ -1370,8 +1377,8 @@ void MV2::processFilamentInfo(const std::string & notification)
     if (numScanned == NUM_SCANNED_EXPECTED)
     {
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "FilamentInfo: Filnum: %d State: %s Trip:%s exTripState:%s\n",
-            filNum, filstaBuffer, tripBuffer, exTripStateBuffer);
+            "(%s) FilamentInfo: Filnum: %d State: %s Trip:%s exTripState:%s\n",
+            portName, filNum, filstaBuffer, tripBuffer, exTripStateBuffer);
 
         FilamentState state = FS_FAILED;
 
@@ -1393,7 +1400,8 @@ void MV2::processFilamentInfo(const std::string & notification)
         }
         else
         {
-            asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,"UNKOWN\n");
+            asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+                "(%s) UNKNOWN FILAMENT STATE\n", portName);
         }
 
         filamentStatus_ = FilamentStatus(filNum-1, state, tripBuffer);
@@ -1452,7 +1460,7 @@ void MV2::scanComplete()
     sumP_ = 0;
 
     asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-        "Sizes %u %u\n", barResultsData_.size(), scanData_.size());
+        "(%s) Sizes %u %u\n", portName, barResultsData_.size(), scanData_.size());
 
     // cut-off partial pressures below threshold as per MV Plus.
     const double MIN_PRESSURE = 1.0e-12;
@@ -1466,7 +1474,8 @@ void MV2::scanComplete()
         {
             barResultsData_[index] = std::max(scanData_[index], MIN_PRESSURE);
             asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-                 "%u %lg %lg\n", index, scanData_[index], barResultsData_[index]);
+                 "(%s) %u %lg %lg\n",
+                 portName, index, scanData_[index], barResultsData_[index]);
             sumP_ += barResultsData_[index];
         }
         break;
@@ -1486,7 +1495,7 @@ void MV2::scanComplete()
                 else
                 {
                     asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-                        "Bad offset %u %u %u\n", index, j, offset);
+                        "(%s) Bad offset %u %u %u\n", portName, index, j, offset);
                 }
             }
 
@@ -1494,7 +1503,7 @@ void MV2::scanComplete()
 
             barResultsData_[index] = std::max(result, MIN_PRESSURE);
             asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-                 "%u %g %g\n", index, result, barResultsData_[index]);
+                 "(%s) %u %g %g\n", portName, index, result, barResultsData_[index]);
             sumP_ += barResultsData_[index];
         }
         break;
@@ -1505,7 +1514,8 @@ void MV2::scanComplete()
         {
             barResultsData_[index] = std::max(scanData_[index], 0.0);
             asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-                 "%u %u %u\n", index, scanData_[index], barResultsData_[index]);
+                 "(%s) %u %u %u\n",
+                 portName, index, scanData_[index], barResultsData_[index]);
             sumP_ += barResultsData_[index];
         }
         break;
@@ -1515,7 +1525,7 @@ void MV2::scanComplete()
         break;
     }
 
-    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "SUMP:%lg\n", sumP_);
+    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) SUMP:%lg\n", portName, sumP_);
     scanning_ = false;
     if ((!headState_.hasChanged()) && (scanMode_ == SINGLE))
     {
@@ -1674,13 +1684,13 @@ asynStatus MV2::writeInt32(asynUser *pasynUser, epicsInt32 value)
 {
     int reason = pasynUser->reason;
     asynPrint(pasynUser, ASYN_TRACE_FLOW,
-        "MV2::writeInt32 (%s) (%d)\n", getParameterName(reason).c_str(), value);
+        "(%s) writeInt32 (%s) (%d)\n", portName, getParameterName(reason).c_str(), value);
     asynPortDriver::writeInt32(pasynUser, value);
 
     if (commsFail_)
     {
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "Wr Int32 %s: DISCONNECTED\n", getParameterName(reason).c_str());
+            "(%s) Wr Int32 %s: DISCONNECTED\n", portName, getParameterName(reason).c_str());
         return asynDisconnected;
     }
 
@@ -1780,7 +1790,7 @@ asynStatus MV2::writeInt32(asynUser *pasynUser, epicsInt32 value)
     else
     {
         status = asynError;
-        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "UNKNOWN(%d)\n", reason);
+        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "(%s) UNKNOWN REASON(%d)\n", portName, reason);
     }
 
     return status;
@@ -1794,7 +1804,7 @@ asynStatus MV2::readInt32(asynUser *pasynUser, epicsInt32 * value)
     if (commsFail_)
     {
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "Rd Int32 %s: DISCONNECTED\n", getParameterName(reason).c_str());
+            "(%s) Rd Int32 %s: DISCONNECTED\n", portName, getParameterName(reason).c_str());
         return asynDisconnected;
     }
 
@@ -1865,12 +1875,14 @@ asynStatus MV2::readInt32(asynUser *pasynUser, epicsInt32 * value)
     }
     else
     {
-        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "Rd32 Error %s\n", getParameterName(reason).c_str());
+        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+            "(%s) Rd32 Error %s\n", portName, getParameterName(reason).c_str());
         return asynError;
     }
 
-    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "Rd32 %s: %d->%d\n",
-        getParameterName(reason).c_str(), *value, newValue);
+    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
+        "(%s) Rd32 %s: %d->%d\n",
+        portName, getParameterName(reason).c_str(), *value, newValue);
     *value = newValue;
 
     return asynSuccess;
@@ -1883,7 +1895,7 @@ asynStatus MV2::readFloat64(asynUser *pasynUser, epicsFloat64 *value)
     if (commsFail_)
     {
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "Rd Flt64 %s: DISCONNECTED\n", getParameterName(reason).c_str());
+            "(%s) Rd Flt64 %s: DISCONNECTED\n", portName, getParameterName(reason).c_str());
         return asynDisconnected;
     }
 
@@ -1896,13 +1908,13 @@ asynStatus MV2::readFloat64(asynUser *pasynUser, epicsFloat64 *value)
     if (isBar)
     {
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "P_BARM[%d]=%d\n", barIndex, P_BARM[barIndex]);
+            "(%s) P_BARM[%d]=%d\n", portName, barIndex, P_BARM[barIndex]);
 
         if (static_cast<size_t>(barIndex) < barResultsData_.size())
         {
             newValue = paToMbar(barResultsData_[barIndex]);
-            asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "MV2::readFloat64 %s %lg->%lg\n",
-            getParameterName(reason).c_str(), *value, newValue);
+            asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) readFloat64 %s %lg->%lg\n",
+            portName, getParameterName(reason).c_str(), *value, newValue);
         }
     }
     else if (reason == P_SUMP)
@@ -1916,12 +1928,12 @@ asynStatus MV2::readFloat64(asynUser *pasynUser, epicsFloat64 *value)
     else
     {
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "Unexpected parameter (%s)\n", getParameterName(reason).c_str());
+            "(%s) Unexpected parameter (%s)\n", portName, getParameterName(reason).c_str());
         return asynError;
     }
 
-    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "MV2::readFloat64 %s %lg->%lg\n",
-        getParameterName(reason).c_str(), *value, newValue);
+    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) readFloat64 %s %lg->%lg\n",
+        portName, getParameterName(reason).c_str(), *value, newValue);
 
     *value = newValue;
     return asynSuccess;
@@ -1935,7 +1947,7 @@ asynStatus MV2::readFloat64Array(asynUser *pasynUser, epicsFloat64 *value,
     if (commsFail_)
     {
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "Rd Flt64Array %s: DISCONNECTED\n", getParameterName(reason).c_str());
+            "(%s) Rd Flt64Array %s: DISCONNECTED\n", portName, getParameterName(reason).c_str());
         return asynDisconnected;
     }
 
@@ -1944,7 +1956,7 @@ asynStatus MV2::readFloat64Array(asynUser *pasynUser, epicsFloat64 *value,
         *nIn = std::min(analogResultsData_.size(), nElements);
         //std::copy(analogResultsData_.begin(), analogResultsData_.begin() + *nIn, value);
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "Rd Flt64Array ANA:%d elements\n", *nIn);
+            "(%s) Rd Flt64Array ANA:%d elements\n", portName, *nIn);
 
         for (std::vector<double>::const_iterator it = analogResultsData_.begin();
              it != analogResultsData_.begin() + *nIn; ++it)
@@ -1958,7 +1970,7 @@ asynStatus MV2::readFloat64Array(asynUser *pasynUser, epicsFloat64 *value,
         *nIn = std::min(barResultsData_.size(), nElements);
         //std::copy(barResultsData_.begin(), barResultsData_.begin() + *nIn, value);
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "Rd Flt64Array BAR:%d elements\n", *nIn);
+            "(%s) Rd Flt64Array BAR:%d elements\n", portName, *nIn);
 
         for (std::vector<double>::const_iterator it = barResultsData_.begin();
              it != barResultsData_.begin() + *nIn; ++it)
@@ -1970,7 +1982,7 @@ asynStatus MV2::readFloat64Array(asynUser *pasynUser, epicsFloat64 *value,
     else
     {
         asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-            "Rd Flt64Array (Unkown): Error\n");
+            "(%s) Rd Flt64Array (Unkown): Error\n", portName);
         return asynError;
     }
 }
