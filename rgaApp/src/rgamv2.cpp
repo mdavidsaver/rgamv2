@@ -12,6 +12,7 @@
 #include <climits>
 #include <string>
 #include <vector>
+#include <climits>
 
 
 #define PEAK_JUMP_SUPPORT 0
@@ -19,6 +20,9 @@
 #define NUM_PARAMS 232
 #define NUM_MASSES 200
 #define NUM_PJMASSES 12
+
+#define SMALL_BUFFER_SIZE 100
+#define LARGE_BUFFER_SIZE 1600
 
 
 namespace rgamv2
@@ -1001,7 +1005,7 @@ void MV2::resumeScan()
 
 std::string MV2::makeAddBarChartCommand(const std::string & name)
 {
-    char buffer[50];
+    char buffer[SMALL_BUFFER_SIZE];
     sprintf(buffer, "AddBarchart %s 1 %u PeakCenter %u %u %u %d",
         name.c_str(), lastMass(headState_.target()), accuracy_,
         egain_, source_, detector_.target());
@@ -1011,7 +1015,7 @@ std::string MV2::makeAddBarChartCommand(const std::string & name)
 
 std::string MV2::makeAddAnalogCommand(const std::string & name)
 {
-    char buffer[50];
+    char buffer[SMALL_BUFFER_SIZE];
     sprintf(buffer, "AddAnalog %s 1 %u %u %u %u %u %d",
         name.c_str(), lastMass(headState_.target()), pointsPerPeak_,
         accuracy_, egain_, source_, detector_.target());
@@ -1020,7 +1024,7 @@ std::string MV2::makeAddAnalogCommand(const std::string & name)
 
 std::string MV2::makePeakJumpCommand(const std::string & name)
 {
-    char buffer[50];
+    char buffer[SMALL_BUFFER_SIZE];
     sprintf(buffer, "AddPeakJump %s PeakCenter %u %u %u %d",
         name.c_str(), accuracy_, egain_, source_, detector_.target());
     return buffer;
@@ -1058,7 +1062,7 @@ void MV2::changeHeadState()
              it != peakJumpMasses_.end();
              ++it)
         {
-            char buffer[50];
+            char buffer[SMALL_BUFFER_SIZE];
             sprintf(buffer, "MeasurementAddMass %u", *it);
             cmds.push_back(buffer);
         } 
@@ -1081,15 +1085,6 @@ asynStatus MV2::sendCommand(const std::string & data, double timeout)
     asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "Send cmd: %s\n", cmd_.c_str());
 
     asynStatus status = pasynOctetSyncIO->write(serialPortUser, cmd_.c_str(), cmd_.length(), timeout, &nWrite);
-    if (status == asynSuccess)
-    {
-        asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "Write ok, %d bytes\n", nWrite);
-    }
-    else
-    {
-        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,"Failed to write error=%d\n", status);
-        epicsThreadSleep(0.5);
-    }
     return status;
 }
 
@@ -1113,7 +1108,7 @@ void MV2::processReceived()
 {
     if (serialPortUser != 0)
     {
-        char buffer[1600];
+        char buffer[LARGE_BUFFER_SIZE];
         buffer[sizeof(buffer)-1] = 0;
 
         int eomReason;
@@ -1124,7 +1119,7 @@ void MV2::processReceived()
             asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "Read ok, %d bytes\n", nRead);
             buffer[nRead] = 0;
             asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,buffer);
-            char headerBuffer[100];
+            char headerBuffer[SMALL_BUFFER_SIZE];
 
             const int HEADER_NUM_SCANNED_EXPECTED = 1;
             if (sscanf(buffer, "%s %*s", headerBuffer) == HEADER_NUM_SCANNED_EXPECTED)
@@ -1153,7 +1148,7 @@ void MV2::processReceived()
                 }
                 else if (event == cmd_.substr(0, event.length()))
                 {
-                    char statusBuffer[100];
+                    char statusBuffer[SMALL_BUFFER_SIZE];
                     const int NUM_SCANNED_EXPECTED = 1;
 
                     if (sscanf(buffer, "%*s %s\r\n", statusBuffer) == NUM_SCANNED_EXPECTED)
@@ -1199,16 +1194,16 @@ void MV2::processReceived()
 
                 if (event == "Sensors")
                 {
-                    char okBuffer[100];
+                    char okBuffer[SMALL_BUFFER_SIZE];
                     if (sscanf(buffer, "Sensors %s\r\n  ", okBuffer))
                     {
                         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "Status:%s\n", okBuffer);
                         if (strcmp(okBuffer, "OK") == 0)
                         {
                             sensors_.clear();
-                            char state[100];
-                            char serialNumber[100];
-                            char name[100];
+                            char state[SMALL_BUFFER_SIZE];
+                            char serialNumber[SMALL_BUFFER_SIZE];
+                            char name[SMALL_BUFFER_SIZE];
                             int numScanned = sscanf(buffer,
                                 "Sensors %*s\r\n  State  SerialNumber   Name\r\n  %s  %s %s",
                                 state, serialNumber, name); 
@@ -1235,7 +1230,7 @@ void MV2::processReceived()
                 }
                 else if (event == "SensorState")
                 {
-                    char state[100];
+                    char state[SMALL_BUFFER_SIZE];
                     int numScanned = sscanf(buffer,
                         "SensorState OK\r\n\
 State %s\r\n\
@@ -1295,9 +1290,9 @@ void MV2::processFilamentStatus(const std::string & notification)
     // set filsta
     unsigned filNum = 0;
 
-    char filstaBuffer[100];
-    char tripBuffer[100];
-    char exTripStateBuffer[100];
+    char filstaBuffer[SMALL_BUFFER_SIZE];
+    char tripBuffer[SMALL_BUFFER_SIZE];
+    char exTripStateBuffer[SMALL_BUFFER_SIZE];
 
     int numScanned = sscanf(notification.c_str(),
 "FilamentStatus  %u %s\r\n\
@@ -1351,9 +1346,9 @@ void MV2::processFilamentInfo(const std::string & notification)
 {
     // set filsta
     unsigned filNum = 0;
-    char filstaBuffer[100];
-    char tripBuffer[100];
-    char exTripStateBuffer[100];
+    char filstaBuffer[SMALL_BUFFER_SIZE];
+    char tripBuffer[SMALL_BUFFER_SIZE];
+    char exTripStateBuffer[SMALL_BUFFER_SIZE];
 
     int numScanned = sscanf(notification.c_str(), "FilamentInfo  OK\r\n\
   SummaryState  %s\r\n\
@@ -1601,7 +1596,7 @@ size_t MV2::lastIndex(HeadState sta)
 
 size_t MV2::massToIndex(float mass) 
 {
-    size_t index = static_cast<size_t>(-1);
+    size_t index = UINT_MAX;
 
     switch (headState_.status())
     {
