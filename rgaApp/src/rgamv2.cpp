@@ -14,7 +14,6 @@
 #include <vector>
 #include <climits>
 
-
 #define PEAK_JUMP_SUPPORT 0
 
 #define NUM_PARAMS 232
@@ -466,8 +465,8 @@ MV2::MV2(char * name, char *address)
 
     for (int i = 0; i < NUM_MASSES; ++i)
     {
-        char paramName[40];
-        sprintf(paramName, "BARM%d", i+1);
+        char paramName[SMALL_BUFFER_SIZE];
+        snprintf(paramName, SMALL_BUFFER_SIZE, "BARM%d", i+1);
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
             "(%s) Create param %s\n", portName, paramName); 
         createParam(paramName, asynParamFloat64, &P_BARM[i]);
@@ -1008,7 +1007,7 @@ void MV2::resumeScan()
 std::string MV2::makeAddBarChartCommand(const std::string & name)
 {
     char buffer[SMALL_BUFFER_SIZE];
-    sprintf(buffer, "AddBarchart %s 1 %u PeakCenter %u %u %u %d",
+    snprintf(buffer, SMALL_BUFFER_SIZE, "AddBarchart %s 1 %u PeakCenter %u %u %u %d",
         name.c_str(), lastMass(headState_.target()), accuracy_,
         egain_, source_, detector_.target());
 
@@ -1018,7 +1017,7 @@ std::string MV2::makeAddBarChartCommand(const std::string & name)
 std::string MV2::makeAddAnalogCommand(const std::string & name)
 {
     char buffer[SMALL_BUFFER_SIZE];
-    sprintf(buffer, "AddAnalog %s 1 %u %u %u %u %u %d",
+    snprintf(buffer, SMALL_BUFFER_SIZE, "AddAnalog %s 1 %u %u %u %u %u %d",
         name.c_str(), lastMass(headState_.target()), pointsPerPeak_,
         accuracy_, egain_, source_, detector_.target());
     return buffer;
@@ -1027,7 +1026,7 @@ std::string MV2::makeAddAnalogCommand(const std::string & name)
 std::string MV2::makePeakJumpCommand(const std::string & name)
 {
     char buffer[SMALL_BUFFER_SIZE];
-    sprintf(buffer, "AddPeakJump %s PeakCenter %u %u %u %d",
+    snprintf(buffer, SMALL_BUFFER_SIZE, "AddPeakJump %s PeakCenter %u %u %u %d",
         name.c_str(), accuracy_, egain_, source_, detector_.target());
     return buffer;
 }
@@ -1038,6 +1037,7 @@ void MV2::changeHeadState()
     switch (headState_.target())
     {
     case STOP:
+    case LOCAL_CONTROL:
         break;
 
     case BARCHART_50:
@@ -1074,6 +1074,8 @@ void MV2::changeHeadState()
 #endif
 
     default:
+        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+            "(%s) Unsupported head state - should not get here %u\n", portName, static_cast<unsigned>(headState_.status()));
         break; 
     }
 }
@@ -1199,7 +1201,8 @@ void MV2::processReceived()
                     if (sscanf(buffer, "Sensors %s\r\n  ", okBuffer))
                     {
                         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) Status:%s\n", portName, okBuffer);
-                        if (strcmp(okBuffer, "OK") == 0)
+                        okBuffer[SMALL_BUFFER_SIZE-1] = '\0';
+                        if (std::string(okBuffer) == "OK")
                         {
                             sensors_.clear();
                             char state[SMALL_BUFFER_SIZE];
@@ -1318,19 +1321,22 @@ void MV2::processFilamentStatus(const std::string & notification)
 
         FilamentState state = FS_FAILED;
 
-        if (strcmp(filstaBuffer, "OFF") == 0)
+        filstaBuffer[SMALL_BUFFER_SIZE-1] = '\0';
+        std::string filsta(filstaBuffer);
+
+        if (filsta == "OFF") 
         {
             state = FS_OFF;
         }
-        else if (strcmp(filstaBuffer, "ON") == 0)
+        else if (filsta == "ON")
         {
             state = FS_ON;
         }
-        else if (strcmp(filstaBuffer, "WARM-UP") == 0)
+        else if (filsta == "WARM-UP")
         {
             state = FS_WARM_UP;
         }
-        else if (strcmp(filstaBuffer, "COOL-DOWN") == 0)
+        else if (filsta == "COOL-DOWN")
         {
             state = FS_COOL_DOWN;
         }
@@ -1382,19 +1388,22 @@ void MV2::processFilamentInfo(const std::string & notification)
 
         FilamentState state = FS_FAILED;
 
-        if (strcmp(filstaBuffer, "OFF") == 0)
+        filstaBuffer[SMALL_BUFFER_SIZE-1] = '\0';
+        std::string filsta(filstaBuffer);
+
+        if (filsta == "OFF")
         {
             state = FS_OFF;
         }
-        else if (strcmp(filstaBuffer, "ON") == 0)
+        else if (filsta == "ON")
         {
             state = FS_ON;
         }
-        else if (strcmp(filstaBuffer, "WARM-UP") == 0)
+        else if (filsta == "WARM-UP")
         {
             state = FS_WARM_UP;
         }
-        else if (strcmp(filstaBuffer, "COOL-DOWN") == 0)
+        else if (filsta == "COOL-DOWN")
         {
             state = FS_COOL_DOWN;
         }
@@ -1522,6 +1531,8 @@ void MV2::scanComplete()
 #endif
 
     default:
+        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+            "(%s) Scan complete in non-scan mode %u\n", portName, static_cast<unsigned>(headState_.status()));
         break;
     }
 
@@ -1567,6 +1578,8 @@ unsigned MV2::lastMass(HeadState sta)
 #endif
 
     default:
+        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+            "(%s) Last mass called in non-scan mode %u\n", portName, static_cast<unsigned>(sta));
         break;
     }
     return mass;
@@ -1599,6 +1612,8 @@ size_t MV2::lastIndex(HeadState sta)
 #endif
 
     default:
+        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+            "(%s) Last index called in non-scan mode %u\n", portName, static_cast<unsigned>(sta));
         break;
     }
     return index;
@@ -1624,6 +1639,8 @@ size_t MV2::massToIndex(float mass)
         break;
 
     default:
+        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+            "(%s) Last index called in non-scan mode %u\n", portName, static_cast<unsigned>(headState_.status()));
         break;
     }
     return index;
@@ -1719,9 +1736,14 @@ asynStatus MV2::writeInt32(asynUser *pasynUser, epicsInt32 value)
         case DEGAS_FILAMENT:
         case CAL_FARADAY:
         case CAL_MULTIPLIER:
+            asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+                "(%s) Head state %d not currently supported\n", portName, value);
+            status = asynError;
             break;
 
         default:
+            asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+                "(%s) Unsupported head state %d\n", portName, value);
             status = asynError;
             break;
         }
