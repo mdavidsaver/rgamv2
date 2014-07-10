@@ -1121,10 +1121,11 @@ void MV2::processReceived()
         int eomReason;
         size_t nRead;
         asynStatus status = pasynOctetSyncIO->read(serialPortUser, buffer, sizeof(buffer)-1, 0.1, &nRead, &eomReason);
+
         if(status == asynSuccess)
         {
             asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-                "(%s) Read ok, %d bytes\n", portName, nRead);
+                "(%s) Read ok, %u bytes\n", portName, nRead);
             buffer[nRead] = 0;
             char headerBuffer[SMALL_BUFFER_SIZE];
 
@@ -1298,13 +1299,13 @@ void MV2::handleMassReading(float mass, double reading)
     {
         scanData_[index] = reading; 
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "(%s) ScanData[%u]:%lg\n", portName, index, scanData_[index]);
+            "(%s) ScanData[%u]:%lg\n", portName, static_cast<unsigned>(index), scanData_[index]);
     }
     else
     {
         asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
             "(%s) Err:ScanData[%u]:%lg sd size:%u\n",
-            index, reading, scanData_.size(), portName);
+            portName, static_cast<unsigned>(index), reading, static_cast<unsigned>(scanData_.size()));
     }
     if (index == lastIndex(headState_.status()))
     {
@@ -1489,7 +1490,8 @@ void MV2::scanComplete()
     sumP_ = 0;
 
     asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-        "(%s) Sizes %u %u\n", portName, barResultsData_.size(), scanData_.size());
+        "(%s) Sizes %u %u\n",
+        portName, static_cast<unsigned>(barResultsData_.size()), static_cast<unsigned>(scanData_.size()));
 
     // cut-off partial pressures below threshold as per MV Plus.
     const double MIN_PRESSURE = 1.0e-12;
@@ -1504,7 +1506,7 @@ void MV2::scanComplete()
             barResultsData_[index] = std::max(scanData_[index], MIN_PRESSURE);
             asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
                  "(%s) %u %lg %lg\n",
-                 portName, index, scanData_[index], barResultsData_[index]);
+                 portName, static_cast<unsigned>(index), scanData_[index], barResultsData_[index]);
             sumP_ += barResultsData_[index];
         }
         break;
@@ -1524,7 +1526,9 @@ void MV2::scanComplete()
                 else
                 {
                     asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-                        "(%s) Bad offset %u %u %u\n", portName, index, j, offset);
+                        "(%s) Bad offset %u %u %u\n",
+                        portName, static_cast<unsigned>(index), static_cast<unsigned>(j),
+                        static_cast<unsigned>(offset));
                 }
             }
 
@@ -1532,7 +1536,7 @@ void MV2::scanComplete()
 
             barResultsData_[index] = std::max(result, MIN_PRESSURE);
             asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-                 "(%s) %u %g %g\n", portName, index, result, barResultsData_[index]);
+                 "(%s) %u %g %g\n", portName, static_cast<unsigned>(index), result, barResultsData_[index]);
             sumP_ += barResultsData_[index];
         }
         break;
@@ -1998,7 +2002,7 @@ asynStatus MV2::readFloat64Array(asynUser *pasynUser, epicsFloat64 *value,
         *nIn = std::min(analogResultsData_.size(), nElements);
         //std::copy(analogResultsData_.begin(), analogResultsData_.begin() + *nIn, value);
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "(%s) Rd Flt64Array ANA:%d elements\n", portName, *nIn);
+            "(%s) Rd Flt64Array ANA:%u elements\n", portName, static_cast<unsigned>(*nIn));
 
         for (std::vector<double>::const_iterator it = analogResultsData_.begin();
              it != analogResultsData_.begin() + *nIn; ++it)
@@ -2012,7 +2016,7 @@ asynStatus MV2::readFloat64Array(asynUser *pasynUser, epicsFloat64 *value,
         *nIn = std::min(barResultsData_.size(), nElements);
         //std::copy(barResultsData_.begin(), barResultsData_.begin() + *nIn, value);
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "(%s) Rd Flt64Array BAR:%d elements\n", portName, *nIn);
+            "(%s) Rd Flt64Array BAR:%u elements\n", portName, static_cast<unsigned>(*nIn));
 
         for (std::vector<double>::const_iterator it = barResultsData_.begin();
              it != barResultsData_.begin() + *nIn; ++it)
