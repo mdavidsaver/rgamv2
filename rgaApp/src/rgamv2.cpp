@@ -5,6 +5,7 @@
 #include <epicsThread.h>
 #include <epicsTimer.h>
 #include <epicsMath.h>
+#include <epicsString.h>
 #include <iocsh.h>
 #include <string.h>
 
@@ -26,6 +27,9 @@
 
 namespace rgamv2
 {
+
+std::string escapedFromRaw(const char * buffer, size_t length);
+std::string escapedFromRaw(const std::string & str);
 
 template <typename T>
 inline T paToMbar(T p)
@@ -503,7 +507,6 @@ MV2::MV2(char * name, char *address)
         peakJumpMasses_.push_back(initialPeakJumpMasses[i]);
     }
 #endif
-
 
     mainThread_ = new MainThread(this);
 
@@ -1120,7 +1123,8 @@ void MV2::processReceived()
         asynStatus status = pasynOctetSyncIO->read(serialPortUser, buffer, sizeof(buffer)-1, 0.1, &nRead, &eomReason);
         if(status == asynSuccess)
         {
-            asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) Read ok, %d bytes\n", portName, nRead);
+            asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
+                "(%s) Read ok, %d bytes\n", portName, nRead);
             buffer[nRead] = 0;
             char headerBuffer[SMALL_BUFFER_SIZE];
 
@@ -1128,7 +1132,9 @@ void MV2::processReceived()
             if (sscanf(buffer, "%s %*s", headerBuffer) == HEADER_NUM_SCANNED_EXPECTED)
             {
                 std::string event(headerBuffer);
-                asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) ASYN_EVENT: %s\n", portName, event.c_str());
+                asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
+                    "(%s) ASYN_EVENT: %s\n", portName, event.c_str());
+
                 if (event == "MassReading")
                 {
                     float mass = 0;
@@ -1146,7 +1152,8 @@ void MV2::processReceived()
                     }
                     else
                     {
-                        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "MassReading invalid\n%s\n", buffer);
+                        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+                            "MassReading invalid\n%s\n", escapedFromRaw(buffer, nRead).c_str());
                     }
                 }
                 else if (event == cmd_.substr(0, event.length()))
@@ -1160,7 +1167,9 @@ void MV2::processReceived()
                     }
                     else
                     {
-                        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "(%s) Command status invalid\n%s\n", portName, buffer);
+                        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+                            "(%s) Command status invalid\n%s\n",
+                            portName, escapedFromRaw(buffer, nRead).c_str());
                         cmdStatus_ = "Error";
                     }
                     cmdState_ = CMD_IDLE;
@@ -1177,12 +1186,16 @@ void MV2::processReceived()
                     {
                         if (!analogInput_.setValue(index, ai))
                         {
-                            asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "(%s) AnalogInput - invalid input number\n%s\n", portName, buffer);
+                            asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+                                "(%s) AnalogInput - invalid input number\n%s\n",
+                                portName, escapedFromRaw(buffer, nRead).c_str());
                         }
                     }
                     else
                     {
-                        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "(%s) AnalogInput invalid\n%s\n", portName, buffer);
+                        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+                            "(%s) AnalogInput invalid\n%s\n",
+                            portName, escapedFromRaw(buffer, nRead).c_str());
                     }
                 }
                 else if (event == "FilamentStatus")
@@ -1231,18 +1244,21 @@ void MV2::processReceived()
                     else
                     {
                         asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-                            "(%s) Sensors command response not OK\n%s\n", portName, buffer);
+                            "(%s) Sensors command response not OK\n%s\n",
+                            portName, escapedFromRaw(buffer, nRead).c_str());
                     }
                 }
                 else if (event == "SensorState")
                 {
                     char state[SMALL_BUFFER_SIZE];
                     int numScanned = sscanf(buffer,
-                        "SensorState OK\r\n\
-State %s\r\n\
-UserApplication %*s\r\n\
-UserVersion %*s\r\n\
-UserAddress %*s\r\n", state);
+                        "SensorState OK\r\n"
+                        "State %s\r\n"
+                        "UserApplication %*s\r\n"
+                        "UserVersion %*s\r\n"
+                        "UserAddress %*s\r\n",
+                         state);
+
                     const int NUM_SCANNED_EXPECTED = 1;
                     if (numScanned == NUM_SCANNED_EXPECTED)
                     {
@@ -1253,7 +1269,8 @@ UserAddress %*s\r\n", state);
                     else
                     {
                         asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-                            "(%s) Sensor State command response not OK\n%s\n", portName, buffer);
+                            "(%s) Sensor State command response not OK\n%s\n",
+                            portName, escapedFromRaw(buffer, nRead).c_str());
                     }
                 }
                 else if (event == "FilamentInfo")
@@ -1264,7 +1281,8 @@ UserAddress %*s\r\n", state);
             }
             else
             {
-                asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "notification invalid\n%s\n", buffer);
+                asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+                    "notification invalid\n%s\n",escapedFromRaw(buffer, nRead).c_str());
             }
         }
     }
@@ -1304,13 +1322,14 @@ void MV2::processFilamentStatus(const std::string & notification)
     char exTripStateBuffer[SMALL_BUFFER_SIZE];
 
     int numScanned = sscanf(notification.c_str(),
-"FilamentStatus  %u %s\r\n\
-  Trip  %s\r\n\
-  Drive %*s\r\n\
-  EmissionTripState %*s\r\n\
-  ExternalTripState %s\r\n\
-  RVCTripState  %*s\r\n\
-  GaugeTripState  %*s", &filNum, filstaBuffer, tripBuffer, exTripStateBuffer); 
+        "FilamentStatus  %u %100s\r\n"
+        "  Trip  %100s\r\n"
+        "  Drive %*s\r\n"
+        "  EmissionTripState %*s\r\n"
+        "  ExternalTripState %100s\r\n"
+        "  RVCTripState  %*s\r\n"
+        "  GaugeTripState  %*s",
+        &filNum, filstaBuffer, tripBuffer, exTripStateBuffer); 
 
     const int NUM_SCANNED_EXPECTED = 4;
     if (numScanned == NUM_SCANNED_EXPECTED)
@@ -1351,7 +1370,7 @@ void MV2::processFilamentStatus(const std::string & notification)
     else
     {
         asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-            "FilamentStatus invalid:\n%s\n", notification.c_str());
+            "FilamentStatus invalid:\n%s\n", escapedFromRaw(notification).c_str());
     }
 }
 
@@ -1363,20 +1382,21 @@ void MV2::processFilamentInfo(const std::string & notification)
     char tripBuffer[SMALL_BUFFER_SIZE];
     char exTripStateBuffer[SMALL_BUFFER_SIZE];
 
-    int numScanned = sscanf(notification.c_str(), "FilamentInfo  OK\r\n\
-  SummaryState  %s\r\n\
-  ActiveFilament  %u\r\n\
-  ExternalTripEnable %*s\r\n\
-  ExternalTripMode  %*s\r\n\
-  EmissionTripEnable %*s\r\n\
-  MaxOnTime %*s\r\n\
-  OnTimeRemaining %*s\r\n\
-  Trip  %s\r\n\
-  Drive %*s\r\n\
-  EmissionTripState %*s\r\n\
-  ExternalTripState %s\r\n\
-  RVCTripState  %*s\r\n\
-  GaugeTripState  %*s\r\n",
+    int numScanned = sscanf(notification.c_str(),
+        "FilamentInfo  OK\r\n"
+        "  SummaryState  %s\r\n"
+        "  ActiveFilament  %u\r\n"
+        "  ExternalTripEnable %*s\r\n"
+        "  ExternalTripMode  %*s\r\n"
+        "  EmissionTripEnable %*s\r\n"
+        "  MaxOnTime %*s\r\n"
+        "  OnTimeRemaining %*s\r\n"
+        "  Trip  %s\r\n"
+        "  Drive %*s\r\n"
+        "  EmissionTripState %*s\r\n"
+        "  ExternalTripState %s\r\n"
+        "  RVCTripState  %*s\r\n"
+        "  GaugeTripState  %*s\r\n",
         filstaBuffer, &filNum, tripBuffer, exTripStateBuffer);
 
     const int NUM_SCANNED_EXPECTED = 4;
@@ -1418,7 +1438,7 @@ void MV2::processFilamentInfo(const std::string & notification)
     else
     {
         asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-            "FilamentInfo invalid:\n%s\n", notification.c_str());
+            "FilamentInfo invalid:\n%s\n", escapedFromRaw(notification).c_str());
     }
 }
 
@@ -2051,6 +2071,21 @@ bool MV2::AnalogInput::setValue(unsigned input, double value)
     }
     return ok;
 }
+
+std::string escapedFromRaw(const char * buffer, size_t length)
+{
+    const size_t OUT_LENGTH = 2*length+1;
+    char outBuffer[OUT_LENGTH];
+    outBuffer[OUT_LENGTH-1] = '\0';
+    epicsStrnEscapedFromRaw(outBuffer, OUT_LENGTH-1, buffer, length);
+    return outBuffer;
+}
+
+std::string escapedFromRaw(const std::string & str)
+{
+    return escapedFromRaw(str.c_str(), str.length()+1);
+}
+
 
 } // namespace rgamv2
 
