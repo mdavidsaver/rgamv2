@@ -477,7 +477,7 @@ MV2::MV2(char * name, char *address)
     }
 
     createParam("SUMP", asynParamFloat64, &P_SUMP);
-    createParam("TOTP", asynParamInt32, &P_TOTP);
+    createParam("TOTP", asynParamFloat64, &P_TOTP);
     createParam("BAR", asynParamFloat64Array, &P_BAR);
     createParam("ANA",  asynParamFloat64Array, &P_ANA);
     createParam("DATA", asynParamInt32, &P_DATA);
