@@ -1125,7 +1125,7 @@ void MV2::processReceived()
         if(status == asynSuccess)
         {
             asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-                "(%s) Read ok, %u bytes\n", portName, nRead);
+                "(%s) Read ok, %u bytes\n", portName, static_cast<unsigned>(nRead));
             buffer[nRead] = 0;
             char headerBuffer[SMALL_BUFFER_SIZE];
 
