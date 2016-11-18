@@ -113,6 +113,7 @@ private:
 
 class MV2 : public asynPortDriver
 {
+//double mass_;
     int P_BARM[NUM_MASSES];
     int P_BAR;
     int P_SUMP;
@@ -139,8 +140,7 @@ public:
     ~MV2();
 
     virtual asynStatus writeInt32(asynUser *pasynUser, epicsInt32 value);
-    virtual asynStatus readInt32(asynUser *pasynUser, epicsInt32 * value);
-    virtual asynStatus readFloat64(asynUser *pasynUser, epicsFloat64 *value);
+
     virtual asynStatus readFloat64Array(asynUser *pasynUser, epicsFloat64 *value,
                                         size_t nElements, size_t *nIn);
 
@@ -174,7 +174,7 @@ private:
         BARCHART_200,
         ANALOG_200,
 #if PEAK_JUMP_SUPPORT
-        PEAK_JUMP = 10
+       PEAK_JUMP = 10
 #endif
     };
 
@@ -213,7 +213,7 @@ private:
         SELECT_SENSOR,
         INITIALIZING,
         SELECTED,
-        IN_CONTROL,
+        IN_CONTROL
     };
 
     enum Task
@@ -244,13 +244,13 @@ private:
         TE_OK,
         TE_ASYN_ERROR,
         TE_CMD_TIMEOUT,
-        TE_PROTOCOL_ERROR,
+        TE_PROTOCOL_ERROR
     };
 
     enum CommandState
     {
         CMD_IDLE,
-        CMD_BUSY,
+        CMD_BUSY
     };
 
     struct SensorInfo
@@ -280,6 +280,7 @@ private:
     void setFilamentControl(FilamentControl con);
     void selectFilament(int fil);
     void scanComplete();
+    void scanChange();
     void getInfo();
     void error();
 
@@ -294,13 +295,21 @@ private:
     std::string makeAddBarChartCommand(const std::string & name);
     std::string makeAddAnalogCommand(const std::string & name);
     std::string makePeakJumpCommand(const std::string & name);
+
     unsigned lastMass();
     unsigned lastMass(HeadState sta);
+    unsigned lastMass(ScanDataType type);
     size_t lastIndex(HeadState sta);
     size_t massToIndex(float mass);
 
     bool isBarchart(HeadState sta);
     bool isScanMode(HeadState sta);
+
+    void updateCache_CS();
+    void updateCache_Scan();
+
+    void setIntegerParameter(int addr, int reason, int value);
+    void setDoubleParameter(int addr, int reason, double value);
 
     const static int numFilaments_ = 2;
     const static int numDetectorIndexes_ = 4;
@@ -334,6 +343,7 @@ private:
 
     ScanMode scanMode_;
     bool scanning_;
+    bool scanChanged_;
 #if PEAK_JUMP_SUPPORT
     std::vector<unsigned> peakJumpMasses_;
 #endif
@@ -365,6 +375,7 @@ private:
     std::vector<double> barResultsData_;
     std::vector<double> analogResultsData_;
     ScanDataType currentData_;
+    HeadState currentHeadState_;
     unsigned currentDetector_;
     double sumP_;
 
@@ -434,7 +445,9 @@ MV2::MV2(char * name, char *address)
         asynFloat64Mask | 
         asynFloat64ArrayMask | 
         asynInt32Mask,  /* interface mask*/
-        0,              /* interrupt mask */
+        asynInt32Mask   |
+        asynFloat64Mask | 
+        asynFloat64ArrayMask, /* interrupt mask */
         0,              /* non-blocking, no address */
         1,              /* autoconnect */
         0,              /* default priority */
@@ -454,11 +467,13 @@ MV2::MV2(char * name, char *address)
     busyCounter_(0),
     scanMode_(CONTINUOUS),
     scanning_(false),
+    scanChanged_(false),
     headState_(STOP),
     detector_(0),
     fil_(0),
     filCon_(FC_OFF),
     currentData_(NO_DATA),
+    currentHeadState_(STOP),
     currentDetector_(0),
     sumP_(0.0)
 {
@@ -498,6 +513,7 @@ MV2::MV2(char * name, char *address)
 
     analogInput_.init(numAnalogInputs_);
     scanData_.resize(lastIndex(ANALOG_200)+1);
+    barResultsData_.resize(NUM_MASSES);
 
 #if PEAK_JUMP_SUPPORT
     const unsigned initialPeakJumpMasses[] = { 18, 28, 32, 44 }; 
@@ -507,6 +523,9 @@ MV2::MV2(char * name, char *address)
         peakJumpMasses_.push_back(initialPeakJumpMasses[i]);
     }
 #endif
+
+    updateCache_CS();
+    updateCache_Scan();
 
     mainThread_ = new MainThread(this);
 
@@ -542,6 +561,13 @@ void MV2::mainRun()
         processReceived();
         processTask();
         stateMachine();
+
+        updateCache_CS();
+        if (scanChanged_)
+        {
+            scanChange();
+            scanChanged_ = false;
+        }
     }
 }
 
@@ -737,6 +763,7 @@ void MV2::stateMachine()
                 {
                     headState_.changeComplete();
                     detector_.changeComplete();
+                    scanChanged_ = true;
                 }
                 else if (task_ == FILAMENT_CONTROL)
                 {
@@ -749,6 +776,7 @@ void MV2::stateMachine()
                 else if (task_ == RELEASE)
                 {
                     headState_.setValue(LOCAL_CONTROL);
+                    scanChanged_ = true;
                     changeState(SELECTED);
                 }
             }
@@ -830,7 +858,7 @@ void MV2::processTask()
             if (busyCounter_ > BUSY_CTR_LIMIT)
             {
                 asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-                    "(%s) BUSY CTR LIMIT REACHED - ERROR!\n", portName);
+                    "(%s) BUSY CTR LIMIT REACHED - ERROR! (CMD %s)\n", portName, cmd_.c_str());
                 taskState_ = TS_COMPLETE;
                 taskErrorStatus_ = TE_CMD_TIMEOUT;
                 return;
@@ -946,6 +974,8 @@ void MV2::select()
 
 void MV2::init()
 {
+    cmds.push_back("SensorState");
+    cmds.push_back("Info");
     cmds.push_back("FilamentInfo");
     cmds.push_back("MultiplierInfo");
 }
@@ -1125,7 +1155,8 @@ void MV2::processReceived()
         if(status == asynSuccess)
         {
             asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-                "(%s) Read ok, %u bytes\n", portName, static_cast<unsigned>(nRead));
+                "(%s) Read ok, %u bytes\n",
+                portName, static_cast<unsigned int>(nRead));
             buffer[nRead] = 0;
             char headerBuffer[SMALL_BUFFER_SIZE];
 
@@ -1147,9 +1178,10 @@ void MV2::processReceived()
                     if (numScanned == NUM_SCANNED_EXPECTED)
                     {
                         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-                            "(%s) Mass Reading(%f)=%lg\n", portName, mass, reading);
+                            "(%s) Mass Reading(%f)=%g\n", portName, mass, reading);
 
                         handleMassReading(mass, reading);
+//mass_ = mass;
                     }
                     else
                     {
@@ -1299,12 +1331,12 @@ void MV2::handleMassReading(float mass, double reading)
     {
         scanData_[index] = reading; 
         asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "(%s) ScanData[%u]:%lg\n", portName, static_cast<unsigned>(index), scanData_[index]);
+            "(%s) ScanData[%u]:%g\n", portName, static_cast<unsigned>(index), scanData_[index]);
     }
     else
     {
         asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-            "(%s) Err:ScanData[%u]:%lg sd size:%u\n",
+            "(%s) Err:ScanData[%u]:%g sd size:%u\n",
             portName, static_cast<unsigned>(index), reading, static_cast<unsigned>(scanData_.size()));
     }
     if (index == lastIndex(headState_.status()))
@@ -1444,39 +1476,33 @@ void MV2::processFilamentInfo(const std::string & notification)
 }
 
 
-
 void MV2::scanComplete()
 {
     switch (headState_.status())
     {
     case BARCHART_50:
         currentData_ = BAR50;
-        barResultsData_.resize(50);
         analogResultsData_.resize(0);
         break;
 
     case BARCHART_100:
         currentData_ = BAR100;
-        barResultsData_.resize(100);
         analogResultsData_.resize(0);
         break;
 
     case BARCHART_200:
         currentData_ = BAR200;
-        barResultsData_.resize(200);
         analogResultsData_.resize(0);
         break;
 
     case ANALOG_200:
         currentData_ = ANALOG200;
-        barResultsData_.resize(200);
         analogResultsData_.resize(scanData_.size());
         break;
 
 #if PEAK_JUMP_SUPPORT
     case PEAK_JUMP:
         currentData_ = PEAKJUMP;
-        barResultsData_.resize(200);
         analogResultsData_.resize(0);
         break;
 #endif
@@ -1486,12 +1512,14 @@ void MV2::scanComplete()
     }
 
     currentDetector_ = detector_.status()+1;
+    currentHeadState_ = headState_.status();
 
     sumP_ = 0;
 
     asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
         "(%s) Sizes %u %u\n",
-        portName, static_cast<unsigned>(barResultsData_.size()), static_cast<unsigned>(scanData_.size()));
+        portName, static_cast<unsigned>(barResultsData_.size()),
+        static_cast<unsigned>(scanData_.size()));
 
     // cut-off partial pressures below threshold as per MV Plus.
     const double MIN_PRESSURE = 1.0e-12;
@@ -1501,13 +1529,18 @@ void MV2::scanComplete()
     case BARCHART_50:
     case BARCHART_100:
     case BARCHART_200:
-        for (size_t index = 0; index < barResultsData_.size(); ++index)
+        for (size_t index = 0; index <  lastMass(); ++index)
         {
             barResultsData_[index] = std::max(scanData_[index], MIN_PRESSURE);
+
             asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-                 "(%s) %u %lg %lg\n",
+                 "(%s) %u %g %g\n",
                  portName, static_cast<unsigned>(index), scanData_[index], barResultsData_[index]);
             sumP_ += barResultsData_[index];
+        }
+        for (size_t index = lastMass(); index < NUM_MASSES; ++index)
+        {
+            barResultsData_[index] = 0;
         }
         break;
 
@@ -1527,7 +1560,8 @@ void MV2::scanComplete()
                 {
                     asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
                         "(%s) Bad offset %u %u %u\n",
-                        portName, static_cast<unsigned>(index), static_cast<unsigned>(j),
+                        portName, static_cast<unsigned>(index), 
+                        static_cast<unsigned>(j),
                         static_cast<unsigned>(offset));
                 }
             }
@@ -1536,7 +1570,9 @@ void MV2::scanComplete()
 
             barResultsData_[index] = std::max(result, MIN_PRESSURE);
             asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-                 "(%s) %u %g %g\n", portName, static_cast<unsigned>(index), result, barResultsData_[index]);
+                 "(%s) %u %g %g\n",
+                 portName, static_cast<unsigned>(index), result,
+                 barResultsData_[index]);
             sumP_ += barResultsData_[index];
         }
         break;
@@ -1556,11 +1592,16 @@ void MV2::scanComplete()
 
     default:
         asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-            "(%s) Scan complete in non-scan mode %u\n", portName, static_cast<unsigned>(headState_.status()));
+            "(%s) Scan complete in non-scan mode %u\n",
+            portName, static_cast<unsigned>(headState_.status()));
         break;
     }
 
-    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) SUMP:%lg\n", portName, sumP_);
+    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) SUMP:%g\n",
+              portName, sumP_);
+
+    updateCache_Scan();
+
     scanning_ = false;
     if ((!headState_.hasChanged()) && (scanMode_ == SINGLE))
     {
@@ -1568,6 +1609,34 @@ void MV2::scanComplete()
     }
 }
 
+
+void MV2::scanChange()
+{
+    if (lastMass() < lastMass(currentHeadState_)) 
+    {
+        for (size_t index = lastMass(); index < NUM_MASSES; ++index)
+        {
+            barResultsData_[index] = 0; 
+        }
+    }
+
+    if (headState_.status() != ANALOG_200)
+    {
+        analogResultsData_.resize(0);
+    }
+
+
+    lock();
+
+    int addr = 0;
+    for (size_t index = lastMass(); index < NUM_MASSES; ++index)
+    {
+         setParamStatus(addr, P_BARM[index], asynDisabled);
+    }
+
+    callParamCallbacks(addr, addr);
+    unlock();
+}
 
 
 
@@ -1602,11 +1671,25 @@ unsigned MV2::lastMass(HeadState sta)
 #endif
 
     default:
-        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-            "(%s) Last mass called in non-scan mode %u\n", portName, static_cast<unsigned>(sta));
+        /*asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+            "(%s) Last mass called in non-scan mode %u\n", portName, static_cast<unsigned>(sta));*/
         break;
     }
     return mass;
+}
+
+unsigned MV2::lastMass(ScanDataType type)
+{
+    switch (type)
+    {
+    case NO_DATA: return 0;
+    case BAR50: return 50;
+    case BAR100: return 100;
+    case BAR200: return 200;
+    case ANALOG200: return 200;
+    case PEAKJUMP: return 200;
+    }
+    return 0;
 }
 
 unsigned MV2::lastMass()
@@ -1708,6 +1791,84 @@ bool MV2::isScanMode(HeadState sta)
     return isScan;
 }
 
+void MV2::updateCache_CS()
+{
+    lock();
+    int addr = 0;
+
+    setIntegerParameter(addr, P_HEADSTA, headState_.status());
+    setIntegerParameter(addr, P_FILSTA, filamentStatus_.filSta_);
+    setIntegerParameter(addr, P_FIL, filamentStatus_.filamentNum_);
+    setIntegerParameter(addr, P_DATA, currentData_);
+    setIntegerParameter(addr, P_SCAN, scanMode_);
+    setIntegerParameter(addr, P_MLTSTA, detector_.status());
+    setIntegerParameter(addr, P_ILK,
+        (filamentStatus_.trip_ == "None") ? TS_OK : TS_FAIL);
+
+    // as far as can tell MODE doesn't do anything in MVPlus except return 0 so do that for now.
+    // leave for now for compatibility with MVPlus panels
+    setIntegerParameter(addr, P_MODE, 0);
+
+    setDoubleParameter(addr, P_TOTP, totalPressure());
+
+    // Do callbacks so higher layers see any changes
+    callParamCallbacks(addr, addr);
+    unlock();
+}
+
+void MV2::updateCache_Scan()
+{
+    lock();
+    int addr = 0;
+    setIntegerParameter(addr, P_DET, currentDetector_);
+    setDoubleParameter(addr, P_SUMP, paToMbar(sumP_));
+
+    for (size_t index = 0; index < barResultsData_.size(); ++index)
+    {
+        setDoubleParameter(addr, P_BARM[index],
+           paToMbar(barResultsData_[index]));
+    }
+
+    for (size_t index = barResultsData_.size();
+         index < NUM_MASSES; ++index)
+    {
+        setParamStatus(addr, P_BARM[index], asynDisabled);
+    }
+
+    callParamCallbacks(addr, addr);
+
+    size_t barSize = 0;
+    switch (headState_.status())
+    {
+    case BARCHART_50:
+        barSize = 50;
+        break;
+
+    case BARCHART_100:
+        barSize = 100;
+        break;
+
+    case BARCHART_200:
+    case ANALOG_200:
+        barSize = 200;
+        break;
+
+    default:
+        break;
+    }
+
+    doCallbacksFloat64Array(&barResultsData_[0], std::min(barResultsData_.size(), barSize),
+                            P_BAR, 0);
+
+
+    doCallbacksFloat64Array(&analogResultsData_[0],
+                            analogResultsData_.size(),
+                            P_ANA, 0);
+
+    unlock();
+}
+
+
 double MV2::totalPressure()
 {
     const size_t TOTAL_PRESSURE_INPUT = 0;
@@ -1720,6 +1881,38 @@ double MV2::totalPressure()
     }
     return pressure;
 }
+
+
+void MV2::setIntegerParameter(int addr, int reason, int value)
+{
+    if (commsFail_)
+    {
+        setParamStatus(addr, reason, asynDisconnected);
+    }
+    else
+    {
+        setParamStatus(addr, reason, asynSuccess);
+        setIntegerParam(addr, reason, value);
+    }
+}
+
+void MV2::setDoubleParameter(int addr, int reason, double value)
+{
+/*if (reason == P_BARM[27] || reason == P_BARM[28] || reason == P_BARM[63] || reason == P_BARM[68] || reason == P_BARM[199])
+{
+std::cout << getParameterName(reason) << "  " << value << std::endl;
+}*/
+    if (commsFail_)
+    {
+        setParamStatus(addr, reason, asynDisconnected);
+    }
+    else
+    {
+        setParamStatus(addr, reason, asynSuccess);
+        setDoubleParam(addr, reason, value);
+    }
+}
+
 
 asynStatus MV2::writeInt32(asynUser *pasynUser, epicsInt32 value)
 {
@@ -1843,195 +2036,12 @@ asynStatus MV2::writeInt32(asynUser *pasynUser, epicsInt32 value)
 }
 
 
-asynStatus MV2::readInt32(asynUser *pasynUser, epicsInt32 * value)
-{
-    int reason = pasynUser->reason;
-
-    if (commsFail_)
-    {
-        asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "(%s) Rd Int32 %s: DISCONNECTED\n", portName, getParameterName(reason).c_str());
-        return asynDisconnected;
-    }
-
-    epicsInt32 newValue = *value;
-
-    if (reason == P_DATA)
-    {
-        newValue = currentData_;
-    }
-    else if (reason == P_HEADSTA)
-    {
-        newValue = headState_.status();
-    }
-    else if (reason == P_SCAN)
-    {
-        newValue = scanMode_;
-    }
-    else if (reason == P_FILSTA)
-    {
-        newValue = filamentStatus_.filSta_;
-    }
-    else if (reason == P_MLTSTA)
-    {
-        newValue = detector_.status();
-    }
-    else if (reason == P_FIL)
-    {
-        newValue = filamentStatus_.filamentNum_;
-    }
-    else if (reason == P_DET)
-    {
-        newValue = currentDetector_;
-    }
-    else if (reason == P_ILK)
-    {
-        newValue = (filamentStatus_.trip_ == "None") ? TS_OK : TS_FAIL;
-    }
-    else if (reason == P_MODE)
-    {
-        // as far as can tell this doesn't do anything in MVPlus except return 0 so do that for now.
-        // leave for now for compatibility with MVPlus panels
-        newValue = 0;
-    }
-    else if (reason == P_CON)
-    {
-        newValue = headState_.control();
-    }
-    else if (reason == P_FILCON)
-    {
-        newValue = filCon_.control();
-    }
-    else if (reason == P_SETFIL)
-    {
-        newValue = fil_.control();
-    }
-    else if (reason == P_SETSCAN)
-    {
-        newValue = scanMode_;
-    }
-    else if (reason == P_MLTCON)
-    {
-        newValue = detector_.status();
-    }
-    else if (reason == P_SETMODE)
-    {
-        // as per MODE
-        newValue = 0;
-    }
-    else
-    {
-        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-            "(%s) Rd32 Error %s\n", portName, getParameterName(reason).c_str());
-        return asynError;
-    }
-
-    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-        "(%s) Rd32 %s: %d->%d\n",
-        portName, getParameterName(reason).c_str(), *value, newValue);
-    *value = newValue;
-
-    return asynSuccess;
-}
-
-asynStatus MV2::readFloat64(asynUser *pasynUser, epicsFloat64 *value)
-{
-    int reason = pasynUser->reason;
-
-    if (commsFail_)
-    {
-        asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "(%s) Rd Flt64 %s: DISCONNECTED\n", portName, getParameterName(reason).c_str());
-        return asynDisconnected;
-    }
-
-    epicsFloat64 newValue = 0.0;
-
-    // try and match to a BAR mass reading first. Assume BARM parameters contiguous.
-    int barIndex = (reason - P_BARM[0]);
-    bool isBar = ((barIndex >= 0 && barIndex < NUM_MASSES) && (reason == P_BARM[barIndex]));
-
-    if (isBar)
-    {
-        asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "(%s) P_BARM[%d]=%d\n", portName, barIndex, P_BARM[barIndex]);
-
-        if (static_cast<size_t>(barIndex) < barResultsData_.size())
-        {
-            newValue = paToMbar(barResultsData_[barIndex]);
-            asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) readFloat64 %s %lg->%lg\n",
-            portName, getParameterName(reason).c_str(), *value, newValue);
-        }
-    }
-    else if (reason == P_SUMP)
-    {
-        newValue = paToMbar(sumP_);
-    }
-    else if (reason == P_TOTP)
-    {
-        newValue = totalPressure();
-    }
-    else
-    {
-        asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "(%s) Unexpected parameter (%s)\n", portName, getParameterName(reason).c_str());
-        return asynError;
-    }
-
-    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW, "(%s) readFloat64 %s %lg->%lg\n",
-        portName, getParameterName(reason).c_str(), *value, newValue);
-
-    *value = newValue;
-    return asynSuccess;
-}
-
 asynStatus MV2::readFloat64Array(asynUser *pasynUser, epicsFloat64 *value,
                             size_t nElements, size_t *nIn)
 {
-    int reason = pasynUser->reason;
-
-    if (commsFail_)
-    {
-        asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "(%s) Rd Flt64Array %s: DISCONNECTED\n", portName, getParameterName(reason).c_str());
-        return asynDisconnected;
-    }
-
-    if (reason == P_ANA)
-    {
-        *nIn = std::min(analogResultsData_.size(), nElements);
-        //std::copy(analogResultsData_.begin(), analogResultsData_.begin() + *nIn, value);
-        asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "(%s) Rd Flt64Array ANA:%u elements\n", portName, static_cast<unsigned>(*nIn));
-
-        for (std::vector<double>::const_iterator it = analogResultsData_.begin();
-             it != analogResultsData_.begin() + *nIn; ++it)
-        {
-            *value++ = paToMbar(*it);
-        }
-        return asynSuccess;
-    }
-    else if (reason == P_BAR)
-    {
-        *nIn = std::min(barResultsData_.size(), nElements);
-        //std::copy(barResultsData_.begin(), barResultsData_.begin() + *nIn, value);
-        asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,
-            "(%s) Rd Flt64Array BAR:%u elements\n", portName, static_cast<unsigned>(*nIn));
-
-        for (std::vector<double>::const_iterator it = barResultsData_.begin();
-             it != barResultsData_.begin() + *nIn; ++it)
-        {
-            *value++ =  paToMbar(*it);
-        }
-        return asynSuccess;
-    }
-    else
-    {
-        asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
-            "(%s) Rd Flt64Array (Unkown): Error\n", portName);
-        return asynError;
-    }
+    return asynSuccess;
 }
+
 
 std::string MV2::getParameterName(int reason)
 {
