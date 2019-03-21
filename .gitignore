@@ -1,8 +1,9 @@
-O.*
+O.*/
 data
-db
-dbd
+/db/
+/dbd/
 doxygen
-iocs/example
-lib
+/iocs/example
+/lib/
 *~
+/configure/*.local
