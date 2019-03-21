@@ -1,16 +1,16 @@
 #Makefile at top of application tree
 TOP = .
-
 include $(TOP)/configure/CONFIG
-DIRS := configure
-DIRS := rgamv2App
+DIRS := $(DIRS) $(filter-out $(DIRS), configure)
+DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard *App))
 
-# requires DLS python bits
-#ifeq ($(wildcard etc),etc)
-#	include $(TOP)/etc/makeIocs/Makefile.iocs
-#	UNINSTALL_DIRS += documentation/doxygen $(IOC_DIRS)
-#endif
+define DIR_template
+ $(1)_DEPEND_DIRS = configure
+endef
+$(foreach dir, $(filter-out configure,$(DIRS)),$(eval $(call DIR_template,$(dir))))
 
-# Comment out the following line to disable building of example iocs
-DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard iocs))
+lblrgaApp_DEPEND_DIRS += rgamv2App
+
+iocBoot_DEPEND_DIRS += $(filter %App,$(DIRS))
+
 include $(TOP)/configure/RULES_TOP
