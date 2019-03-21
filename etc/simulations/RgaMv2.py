@@ -1,18 +1,14 @@
-from pkg_resources import require
-require('dls_serial_sim')
-from dls_serial_sim import serial_device
+import socket
+
 
 # An MV2 RGA simulation
-class RgaMv2(serial_device):
+class RgaMv2(object):
 
-    def __init__(self, name='none', tcpPort=None, ui=None):
+    def __init__(self):
         '''Create an MV2 RGA simulator.'''
-        self.name = name
-        serial_device.__init__(self, ui=ui)
+        self.name = ''
         self.InTerminator = "\r\n"
         self.OutTerminator = "\r\r"
-        if tcpPort is not None:
-            self.start_ip(tcpPort)
         self.userApplication = ''
         self.userVersion = ''
         self.barchartName = ''
@@ -24,19 +20,17 @@ class RgaMv2(serial_device):
         self.barchartSourceIndex = 0
         self.barchartDetectorIndex = 0
         self.scanMeasurement = ''
-        self.schedule(self.process, 1)
-        self.diagnostic("Created MV2 RGA simulator %s\n" % name)
 
     def reply(self, command):
         '''Handle commands.  Lots still TODO'''
-        result = None
+        result = ''
         tokens = command.split()
         if len(tokens) >= 1 and tokens[0] == "Release":
-            result = 'Release OK\r\n\r\n'
+            result = 'Release OK\r\n'
         elif len(tokens) >= 1 and tokens[0] == "Sensors":
-            result = 'Sensors OK\r\nState SerialNumber Name\r\nReady LM70-00197021 \"Chamber A\"\r\n\r\n'
+            result = 'Sensors OK\r\nState SerialNumber Name\r\nReady LM70-00197021 \"Chamber A\"\r\n'
         elif len(tokens) >= 2 and tokens[0] == "Select":
-            result = 'Select OK\r\nSerialNumber LM70-00197021\r\nState Ready\r\n\r\n'
+            result = 'Select OK\r\nSerialNumber LM70-00197021\r\nState Ready\r\n'
         elif len(tokens) >= 1 and tokens[0] == "FilamentInfo":
             result = 'FilamentInfo OK\r\n'\
                 'SummaryState OFF\r\n'\
@@ -50,7 +44,7 @@ class RgaMv2(serial_device):
                 'Drive Off\r\n'\
                 'EmissionTripState OK\r\n'\
                 'ExternalTripState OK\r\n'\
-                'RVCTripState OK\r\n\r\n'
+                'RVCTripState OK\r\n'
         elif len(tokens) >= 1 and tokens[0] == "MultiplierInfo":
             result = 'MultiplierInfo OK\r\n'\
                 'InhibitWhenFilamentOff Yes\r\n'\
@@ -58,23 +52,23 @@ class RgaMv2(serial_device):
                 'MultiplierOn No\r\n'\
                 'LockedByFilament Yes\r\n'\
                 'LockedByRVC No\r\n'\
-                'LockedBySoftware No\r\n\r\n'
+                'LockedBySoftware No\r\n'
         elif len(tokens) >= 3 and tokens[0] == "Control":
             self.userApplication = tokens[1]
             self.userVersion = tokens[2]
-            result = 'Control OK\r\nSerialNumber LM70-00197021\r\n\r\n'
+            result = 'Control OK\r\nSerialNumber LM70-00197021\r\n'
         elif len(tokens) >= 3 and tokens[0] == "AnalogInputInterval":
-            result = 'AnalogInputInterval OK\r\n\r\n'
+            result = 'AnalogInputInterval OK\r\n'
         elif len(tokens) >= 3 and tokens[0] == "AnalogInputEnable":
-            result = 'AnalogInputEnable OK\r\n\r\n'
+            result = 'AnalogInputEnable OK\r\n'
         elif len(tokens) >= 1 and tokens[0] == "MeasurementRemoveAll":
-            result = 'MeasurementRemoveAll OK\r\n\r\n'
+            result = 'MeasurementRemoveAll OK\r\n'
         elif len(tokens) >= 1 and tokens[0] == "SensorState":
             result = 'SensorState OK\r\n' \
                 'State InUse\r\n'\
                 'UserApplication %s\r\n'\
                 'UserVersion %s\r\n'\
-                'UserAddress 127.0.0.1\r\n\r\n' % (self.userApplication, self.userVersion)
+                'UserAddress 127.0.0.1\r\n' % (self.userApplication, self.userVersion)
         elif len(tokens) >= 1 and tokens[0] == "Info":
             result = 'Info OK\r\n' \
                 'SerialNumber LM70-00197021\r\n' \
@@ -106,9 +100,9 @@ class RgaMv2(serial_device):
                 'FullScaleADCCount 8388608\r\n' \
                 'PeakResolution 32\r\n' \
                 'ConfigurableIonSource Yes\r\n' \
-                'RolloverCompensation No\r\n\r\n' % (self.userApplication, self.userVersion)
+                'RolloverCompensation No\r\n' % (self.userApplication, self.userVersion)
         elif len(tokens) >= 1 and tokens[0] == 'ScanStop':
-            result = 'ScanStop OK\r\n\r\n'
+            result = 'ScanStop OK\r\n'
         elif len(tokens) >= 9 and tokens[0] == 'AddBarchart':
             self.barchartName = tokens[1]
             self.barchartStartMass = int(tokens[2])
@@ -126,22 +120,49 @@ class RgaMv2(serial_device):
                 ('Accuracy %s\r\n' % self.barchartAccuracy) + \
                 ('EGainIndex %s\r\n' % self.barchartEGainIndex) + \
                 ('SourceIndex %s\r\n' % self.barchartSourceIndex) + \
-                ('DetectorIndex %s\r\n\r\n' % self.barchartDetectorIndex)
+                ('DetectorIndex %s\r\n' % self.barchartDetectorIndex)
         elif len(tokens) >= 2 and tokens[0] == 'ScanAdd':
             self.scanMeasurement = tokens[1]
             result = 'ScanAdd OK\r\nMeasurement %s\r\n' % self.scanMeasurement
         elif len(tokens) >= 2 and tokens[0] == 'ScanStart':
             self.numberOfScans = int(tokens[1])
-            result = 'ScanStart OK\r\n\r\n'
+            result = 'ScanStart OK\r\n'
         elif len(tokens) >= 2 and tokens[0] == 'ScanResume':
             self.numberOfScans = int(tokens[1])
-            result = 'ScanResume OK\r\n\r\n'
-        text = "%s==>%s" % (repr(command), repr(result))
-        self.diagnostic(text, 1)
-        return result
+            result = 'ScanResume OK\r\n'
+        else:
+            print("Unknown command", tokens)
+        return result+'\r\n\r\r'
 
     def process(self):
         '''Perform the background processing'''
         pass
 
     
+def run():
+    S = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
+    S.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    S.bind(('127.0.0.1', 10014))
+    S.listen(1)
+
+    sim = RgaMv2()
+
+    while True:
+        C, addr = S.accept()
+        print("Accept from", addr)
+
+        F = C.makefile('r+b', 0)
+
+        for line in F:
+            print(">>>>>>>>>>>>>>>")
+            print(line)
+            out = sim.reply(line)
+            if out:
+                print("<<<<<<<<<<<<<<<<<<<<<<")
+                print(out)
+                F.write(out)
+                F.flush()
+        print("Closed from", addr)
+
+if __name__=='__main__':
+    run()
