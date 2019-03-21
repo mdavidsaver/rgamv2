@@ -1318,6 +1318,11 @@ void MV2::processReceived()
                     "notification invalid\n%s\n",escapedFromRaw(buffer, nRead).c_str());
             }
         }
+        else if(status!=asynTimeout) {
+            asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,
+                "(%s) Read error %d : %s\n",
+                portName, status, serialPortUser->errorMessage);
+        }
     }
 }
 
