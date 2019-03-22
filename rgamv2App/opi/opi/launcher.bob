@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>Display</name>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button</name>
+    <actions>
+      <action type="open_display">
+        <file>rga.bob</file>
+        <macros>
+          <device>RGATST</device>
+        </macros>
+        <target>replace</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>RGA</text>
+    <x>20</x>
+    <y>30</y>
+    <width>120</width>
+    <height>40</height>
+  </widget>
+</display>

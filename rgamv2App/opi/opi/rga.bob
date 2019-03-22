@@ -1,0 +1,2850 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>MKS RGA - $(device)</name>
+  <x>161</x>
+  <y>323</y>
+  <width>487</width>
+  <background_color>
+    <color name="Canvas" red="200" green="200" blue="200">
+    </color>
+  </background_color>
+  <widget type="rectangle" version="2.0.0">
+    <name>EDM Rectangle</name>
+    <width>488</width>
+    <height>28</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="VA title" red="202" green="223" blue="159">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="VA title" red="202" green="223" blue="159">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>$(device)</text>
+    <width>488</width>
+    <height>28</height>
+    <font>
+      <font family="arial" style="BOLD" size="12.871287128712872">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>EDM Rectangle</name>
+    <x>200</x>
+    <y>128</y>
+    <width>2</width>
+    <height>289</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>EDM Rectangle</name>
+    <x>470</x>
+    <y>128</y>
+    <width>2</width>
+    <height>289</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>EDM Rectangle</name>
+    <x>440</x>
+    <y>128</y>
+    <width>2</width>
+    <height>289</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>EDM Rectangle</name>
+    <x>410</x>
+    <y>128</y>
+    <width>2</width>
+    <height>289</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>EDM Rectangle</name>
+    <x>380</x>
+    <y>128</y>
+    <width>2</width>
+    <height>289</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>EDM Rectangle</name>
+    <x>350</x>
+    <y>128</y>
+    <width>2</width>
+    <height>289</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>EDM Rectangle</name>
+    <x>320</x>
+    <y>128</y>
+    <width>2</width>
+    <height>289</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>EDM Rectangle</name>
+    <x>290</x>
+    <y>128</y>
+    <width>2</width>
+    <height>289</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>EDM Rectangle</name>
+    <x>260</x>
+    <y>128</y>
+    <width>2</width>
+    <height>289</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>EDM Rectangle</name>
+    <x>230</x>
+    <y>128</y>
+    <width>2</width>
+    <height>289</height>
+    <line_width>1</line_width>
+    <line_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):ILK</pv_name>
+    <x>341</x>
+    <y>59</y>
+    <width>136</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):DET</pv_name>
+    <x>115</x>
+    <y>59</y>
+    <width>151</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):DATA</pv_name>
+    <x>115</x>
+    <y>33</y>
+    <width>151</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>EDM Exit Button</name>
+    <actions>
+      <action type="execute">
+        <script file="EmbeddedJs">
+          <text><![CDATA[importPackage(Packages.org.csstudio.opibuilder.scriptUtil);ScriptUtil.closeAssociatedOPI(widget);]]></text>
+        </script>
+      </action>
+    </actions>
+    <text>Exit</text>
+    <x>373</x>
+    <y>510</y>
+    <width>101</width>
+    <height>26</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Exit: FG" red="192" green="0" blue="192">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Controller: BG" red="205" green="205" blue="205">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>Head Status</text>
+    <x>5</x>
+    <y>424</y>
+    <width>61</width>
+    <height>12</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>IMG Interlock</text>
+    <x>245</x>
+    <y>60</y>
+    <width>66</width>
+    <height>12</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>Multiplier</text>
+    <x>295</x>
+    <y>466</y>
+    <width>47</width>
+    <height>12</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <rules>
+      <rule name="visibleRule" prop_id="visible" out_exp="false">
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp; pv0&lt;1.0">
+          <value>true</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>false</value>
+        </exp>
+        <pv_name>$(device):MODE</pv_name>
+      </rule>
+    </rules>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>Scan Mode</text>
+    <x>295</x>
+    <y>424</y>
+    <width>55</width>
+    <height>12</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <rules>
+      <rule name="visibleRule" prop_id="visible" out_exp="false">
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp; pv0&lt;1.0">
+          <value>true</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>false</value>
+        </exp>
+        <pv_name>$(device):MODE</pv_name>
+      </rule>
+    </rules>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="combo" version="2.0.0">
+    <name>EDM menu button</name>
+    <pv_name>$(device):CON</pv_name>
+    <x>115</x>
+    <y>418</y>
+    <width>161</width>
+    <height>26</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Controller: FG" red="0" green="0" blue="192">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Controller: BG" red="205" green="205" blue="205">
+      </color>
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>Filament Status</text>
+    <x>5</x>
+    <y>466</y>
+    <width>78</width>
+    <height>12</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <rules>
+      <rule name="visibleRule" prop_id="visible" out_exp="false">
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp; pv0&lt;1.0">
+          <value>true</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>false</value>
+        </exp>
+        <pv_name>$(device):MODE</pv_name>
+      </rule>
+    </rules>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="combo" version="2.0.0">
+    <name>EDM menu button</name>
+    <pv_name>$(device):SETFIL</pv_name>
+    <x>115</x>
+    <y>460</y>
+    <width>101</width>
+    <height>26</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Controller: FG" red="0" green="0" blue="192">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Controller: BG" red="205" green="205" blue="205">
+      </color>
+    </background_color>
+    <rules>
+      <rule name="visibleRule" prop_id="visible" out_exp="false">
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp; pv0&lt;1.0">
+          <value>true</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>false</value>
+        </exp>
+        <pv_name>$(device):MODE</pv_name>
+      </rule>
+    </rules>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="combo" version="2.0.0">
+    <name>EDM menu button</name>
+    <pv_name>$(device):FILCON</pv_name>
+    <x>220</x>
+    <y>460</y>
+    <width>56</width>
+    <height>26</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Controller: FG" red="0" green="0" blue="192">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Controller: BG" red="205" green="205" blue="205">
+      </color>
+    </background_color>
+    <rules>
+      <rule name="visibleRule" prop_id="visible" out_exp="false">
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp; pv0&lt;1.0">
+          <value>true</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>false</value>
+        </exp>
+        <pv_name>$(device):MODE</pv_name>
+      </rule>
+    </rules>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="combo" version="2.0.0">
+    <name>EDM menu button</name>
+    <pv_name>$(device):MLTCON</pv_name>
+    <x>373</x>
+    <y>460</y>
+    <width>101</width>
+    <height>26</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Controller: FG" red="0" green="0" blue="192">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Controller: BG" red="205" green="205" blue="205">
+      </color>
+    </background_color>
+    <rules>
+      <rule name="visibleRule" prop_id="visible" out_exp="false">
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp; pv0&lt;1.0">
+          <value>true</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>false</value>
+        </exp>
+        <pv_name>$(device):MODE</pv_name>
+      </rule>
+    </rules>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="combo" version="2.0.0">
+    <name>EDM menu button</name>
+    <pv_name>$(device):SETSCAN</pv_name>
+    <x>373</x>
+    <y>418</y>
+    <width>101</width>
+    <height>26</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Controller: FG" red="0" green="0" blue="192">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Controller: BG" red="205" green="205" blue="205">
+      </color>
+    </background_color>
+    <rules>
+      <rule name="visibleRule" prop_id="visible" out_exp="false">
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp; pv0&lt;1.0">
+          <value>true</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>false</value>
+        </exp>
+        <pv_name>$(device):MODE</pv_name>
+      </rule>
+    </rules>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>Current Data</text>
+    <x>5</x>
+    <y>34</y>
+    <width>65</width>
+    <height>12</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>Detector Setting</text>
+    <x>5</x>
+    <y>60</y>
+    <width>82</width>
+    <height>12</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>EDM shell command</name>
+    <actions>
+      <action type="command">
+        <command>strip.py $(device):LOG:M2 $(device):LOG:M4 $(device):LOG:M16 $(device):LOG:M18 $(device):LOG:M28 $(device):LOG:M32 $(device):LOG:M44 log_mbar</command>
+      </action>
+    </actions>
+    <text>Graph</text>
+    <x>115</x>
+    <y>510</y>
+    <width>101</width>
+    <height>26</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Related Display: FG" red="128" green="64" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Controller: BG" red="205" green="205" blue="205">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>EDM related display</name>
+    <actions>
+      <action type="open_display">
+        <file>./rgaBarChart.opi</file>
+        <target>window</target>
+      </action>
+    </actions>
+    <text>Bar Chart</text>
+    <x>220</x>
+    <y>510</y>
+    <width>101</width>
+    <height>26</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Related Display: FG" red="128" green="64" blue="32">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Controller: BG" red="205" green="205" blue="205">
+      </color>
+    </background_color>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>Mass</text>
+    <x>5</x>
+    <y>112</y>
+    <width>25</width>
+    <height>12</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>Pressure</text>
+    <x>117</x>
+    <y>112</y>
+    <width>43</width>
+    <height>12</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>0</name>
+    <x>193</x>
+    <y>113</y>
+    <width>295</width>
+    <height>17</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>-2</text>
+      <x>284</x>
+      <width>8</width>
+      <height>9</height>
+      <font>
+        <font family="arial" style="BOLD" size="6.930693069306931">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>10</text>
+      <x>269</x>
+      <y>2</y>
+      <width>12</width>
+      <height>11</height>
+      <font>
+        <font family="arial" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>-3</text>
+      <x>254</x>
+      <width>8</width>
+      <height>9</height>
+      <font>
+        <font family="arial" style="BOLD" size="6.930693069306931">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>10</text>
+      <x>240</x>
+      <y>2</y>
+      <width>12</width>
+      <height>11</height>
+      <font>
+        <font family="arial" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>-4</text>
+      <x>224</x>
+      <width>8</width>
+      <height>9</height>
+      <font>
+        <font family="arial" style="BOLD" size="6.930693069306931">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>10</text>
+      <x>210</x>
+      <y>2</y>
+      <width>12</width>
+      <height>11</height>
+      <font>
+        <font family="arial" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>-5</text>
+      <x>194</x>
+      <width>8</width>
+      <height>9</height>
+      <font>
+        <font family="arial" style="BOLD" size="6.930693069306931">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>10</text>
+      <x>180</x>
+      <y>2</y>
+      <width>12</width>
+      <height>11</height>
+      <font>
+        <font family="arial" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>-6</text>
+      <x>164</x>
+      <width>8</width>
+      <height>9</height>
+      <font>
+        <font family="arial" style="BOLD" size="6.930693069306931">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>10</text>
+      <x>150</x>
+      <y>2</y>
+      <width>12</width>
+      <height>11</height>
+      <font>
+        <font family="arial" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>-7</text>
+      <x>134</x>
+      <width>8</width>
+      <height>9</height>
+      <font>
+        <font family="arial" style="BOLD" size="6.930693069306931">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>10</text>
+      <x>120</x>
+      <y>2</y>
+      <width>12</width>
+      <height>11</height>
+      <font>
+        <font family="arial" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>-8</text>
+      <x>104</x>
+      <width>8</width>
+      <height>9</height>
+      <font>
+        <font family="arial" style="BOLD" size="6.930693069306931">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>10</text>
+      <x>90</x>
+      <y>2</y>
+      <width>12</width>
+      <height>11</height>
+      <font>
+        <font family="arial" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>-9</text>
+      <x>74</x>
+      <width>8</width>
+      <height>9</height>
+      <font>
+        <font family="arial" style="BOLD" size="6.930693069306931">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>10</text>
+      <x>60</x>
+      <y>2</y>
+      <width>12</width>
+      <height>11</height>
+      <font>
+        <font family="arial" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>-10</text>
+      <x>44</x>
+      <width>13</width>
+      <height>9</height>
+      <font>
+        <font family="arial" style="BOLD" size="6.930693069306931">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>10</text>
+      <x>30</x>
+      <y>2</y>
+      <width>12</width>
+      <height>11</height>
+      <font>
+        <font family="arial" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>-11</text>
+      <x>14</x>
+      <width>13</width>
+      <height>9</height>
+      <font>
+        <font family="arial" style="BOLD" size="6.930693069306931">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>10</text>
+      <y>2</y>
+      <width>12</width>
+      <height>11</height>
+      <font>
+        <font family="arial" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>EDM progressbar</name>
+    <pv_name>$(device):LOG:M2</pv_name>
+    <x>200</x>
+    <y>131</y>
+    <width>273</width>
+    <height>23</height>
+    <fill_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </fill_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <maximum>0.0</maximum>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M2</pv_name>
+    <x>115</x>
+    <y>131</y>
+    <width>81</width>
+    <height>23</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Monitor: FG" red="96" green="255" blue="96">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color name="Green" red="0" green="255" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M2.DESC</pv_name>
+    <x>32</x>
+    <y>132</y>
+    <width>91</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>2:</text>
+    <x>5</x>
+    <y>132</y>
+    <width>24</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>EDM progressbar</name>
+    <pv_name>$(device):LOG:M4</pv_name>
+    <x>200</x>
+    <y>157</y>
+    <width>273</width>
+    <height>23</height>
+    <fill_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </fill_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <maximum>0.0</maximum>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M4</pv_name>
+    <x>115</x>
+    <y>157</y>
+    <width>81</width>
+    <height>23</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Monitor: FG" red="96" green="255" blue="96">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color name="Green" red="0" green="255" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M4.DESC</pv_name>
+    <x>32</x>
+    <y>158</y>
+    <width>91</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>4:</text>
+    <x>5</x>
+    <y>158</y>
+    <width>24</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>EDM progressbar</name>
+    <pv_name>$(device):LOG:M14</pv_name>
+    <x>200</x>
+    <y>183</y>
+    <width>273</width>
+    <height>23</height>
+    <fill_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </fill_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <maximum>0.0</maximum>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M14</pv_name>
+    <x>115</x>
+    <y>183</y>
+    <width>81</width>
+    <height>23</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Monitor: FG" red="96" green="255" blue="96">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color name="Green" red="0" green="255" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M14.DESC</pv_name>
+    <x>32</x>
+    <y>184</y>
+    <width>91</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>14:</text>
+    <x>5</x>
+    <y>184</y>
+    <width>16</width>
+    <height>12</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>EDM progressbar</name>
+    <pv_name>$(device):LOG:M15</pv_name>
+    <x>200</x>
+    <y>209</y>
+    <width>273</width>
+    <height>23</height>
+    <fill_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </fill_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <maximum>0.0</maximum>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M15</pv_name>
+    <x>115</x>
+    <y>209</y>
+    <width>81</width>
+    <height>23</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Monitor: FG" red="96" green="255" blue="96">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color name="Green" red="0" green="255" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M15.DESC</pv_name>
+    <x>32</x>
+    <y>210</y>
+    <width>91</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>15:</text>
+    <x>5</x>
+    <y>210</y>
+    <width>16</width>
+    <height>12</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>EDM progressbar</name>
+    <pv_name>$(device):LOG:M16</pv_name>
+    <x>200</x>
+    <y>235</y>
+    <width>273</width>
+    <height>23</height>
+    <fill_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </fill_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <maximum>0.0</maximum>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M16</pv_name>
+    <x>115</x>
+    <y>235</y>
+    <width>81</width>
+    <height>23</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Monitor: FG" red="96" green="255" blue="96">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color name="Green" red="0" green="255" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M16.DESC</pv_name>
+    <x>32</x>
+    <y>236</y>
+    <width>91</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>16:</text>
+    <x>5</x>
+    <y>236</y>
+    <width>24</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>EDM progressbar</name>
+    <pv_name>$(device):LOG:M18</pv_name>
+    <x>200</x>
+    <y>261</y>
+    <width>273</width>
+    <height>23</height>
+    <fill_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </fill_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <maximum>0.0</maximum>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M18</pv_name>
+    <x>115</x>
+    <y>261</y>
+    <width>81</width>
+    <height>23</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Monitor: FG" red="96" green="255" blue="96">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color name="Green" red="0" green="255" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M18.DESC</pv_name>
+    <x>32</x>
+    <y>262</y>
+    <width>91</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>18:</text>
+    <x>5</x>
+    <y>262</y>
+    <width>24</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>EDM progressbar</name>
+    <pv_name>$(device):LOG:M28</pv_name>
+    <x>200</x>
+    <y>287</y>
+    <width>273</width>
+    <height>23</height>
+    <fill_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </fill_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <maximum>0.0</maximum>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M28</pv_name>
+    <x>115</x>
+    <y>287</y>
+    <width>81</width>
+    <height>23</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Monitor: FG" red="96" green="255" blue="96">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color name="Green" red="0" green="255" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M28.DESC</pv_name>
+    <x>32</x>
+    <y>288</y>
+    <width>91</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>28:</text>
+    <x>5</x>
+    <y>288</y>
+    <width>24</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>EDM progressbar</name>
+    <pv_name>$(device):LOG:M32</pv_name>
+    <x>200</x>
+    <y>313</y>
+    <width>273</width>
+    <height>23</height>
+    <fill_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </fill_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <maximum>0.0</maximum>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M32</pv_name>
+    <x>115</x>
+    <y>313</y>
+    <width>81</width>
+    <height>23</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Monitor: FG" red="96" green="255" blue="96">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color name="Green" red="0" green="255" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M32.DESC</pv_name>
+    <x>32</x>
+    <y>314</y>
+    <width>91</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>32:</text>
+    <x>5</x>
+    <y>314</y>
+    <width>24</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>EDM progressbar</name>
+    <pv_name>$(device):LOG:M40</pv_name>
+    <x>200</x>
+    <y>339</y>
+    <width>273</width>
+    <height>23</height>
+    <fill_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </fill_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <maximum>0.0</maximum>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M40</pv_name>
+    <x>115</x>
+    <y>339</y>
+    <width>81</width>
+    <height>23</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Monitor: FG" red="96" green="255" blue="96">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color name="Green" red="0" green="255" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M40.DESC</pv_name>
+    <x>32</x>
+    <y>340</y>
+    <width>91</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>40:</text>
+    <x>5</x>
+    <y>340</y>
+    <width>16</width>
+    <height>12</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>EDM progressbar</name>
+    <pv_name>$(device):LOG:M44</pv_name>
+    <x>200</x>
+    <y>365</y>
+    <width>273</width>
+    <height>23</height>
+    <fill_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </fill_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <maximum>0.0</maximum>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M44</pv_name>
+    <x>115</x>
+    <y>365</y>
+    <width>81</width>
+    <height>23</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Monitor: FG" red="96" green="255" blue="96">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color name="Green" red="0" green="255" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M44.DESC</pv_name>
+    <x>32</x>
+    <y>366</y>
+    <width>91</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>44:</text>
+    <x>5</x>
+    <y>366</y>
+    <width>16</width>
+    <height>12</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>1</name>
+    <x>245</x>
+    <y>33</y>
+    <width>236</width>
+    <height>22</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <rules>
+      <rule name="visibleRule" prop_id="visible" out_exp="false">
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp; pv0&lt;0.0">
+          <value>true</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>false</value>
+        </exp>
+        <pv_name>$(device):DATA</pv_name>
+      </rule>
+    </rules>
+    <widget type="group" version="2.0.0">
+      <name>0</name>
+      <x>165</x>
+      <width>71</width>
+      <height>19</height>
+      <style>3</style>
+      <transparent>true</transparent>
+      <widget type="textupdate" version="2.0.0">
+        <name>EDM Text Update</name>
+        <pv_name>$(device):YEAR</pv_name>
+        <x>46</x>
+        <width>21</width>
+        <height>17</height>
+        <font>
+          <font family="arial" style="BOLD" size="9.900990099009901">
+          </font>
+        </font>
+        <foreground_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </foreground_color>
+        <background_color>
+          <color red="102" green="102" blue="102">
+          </color>
+        </background_color>
+        <transparent>true</transparent>
+        <horizontal_alignment>1</horizontal_alignment>
+        <border_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </border_color>
+      </widget>
+      <widget type="label" version="2.0.0">
+        <name>EDM Label</name>
+        <text>/</text>
+        <x>42</x>
+        <width>6</width>
+        <height>17</height>
+        <font>
+          <font family="arial" style="BOLD" size="9.900990099009901">
+          </font>
+        </font>
+        <foreground_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </foreground_color>
+        <background_color>
+          <color red="102" green="102" blue="102">
+          </color>
+        </background_color>
+        <horizontal_alignment>1</horizontal_alignment>
+        <vertical_alignment>1</vertical_alignment>
+        <border_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </border_color>
+      </widget>
+      <widget type="textupdate" version="2.0.0">
+        <name>EDM Text Update</name>
+        <pv_name>$(device):MON</pv_name>
+        <x>23</x>
+        <width>21</width>
+        <height>17</height>
+        <font>
+          <font family="arial" style="BOLD" size="9.900990099009901">
+          </font>
+        </font>
+        <foreground_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </foreground_color>
+        <background_color>
+          <color red="102" green="102" blue="102">
+          </color>
+        </background_color>
+        <transparent>true</transparent>
+        <horizontal_alignment>1</horizontal_alignment>
+        <border_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </border_color>
+      </widget>
+      <widget type="label" version="2.0.0">
+        <name>EDM Label</name>
+        <text>/</text>
+        <x>19</x>
+        <width>6</width>
+        <height>17</height>
+        <font>
+          <font family="arial" style="BOLD" size="11.881188118811881">
+          </font>
+        </font>
+        <foreground_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </foreground_color>
+        <background_color>
+          <color red="102" green="102" blue="102">
+          </color>
+        </background_color>
+        <horizontal_alignment>1</horizontal_alignment>
+        <vertical_alignment>1</vertical_alignment>
+        <border_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </border_color>
+      </widget>
+      <widget type="textupdate" version="2.0.0">
+        <name>EDM Text Update</name>
+        <pv_name>$(device):DAY</pv_name>
+        <width>21</width>
+        <height>17</height>
+        <font>
+          <font family="arial" style="BOLD" size="9.900990099009901">
+          </font>
+        </font>
+        <foreground_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </foreground_color>
+        <background_color>
+          <color red="102" green="102" blue="102">
+          </color>
+        </background_color>
+        <transparent>true</transparent>
+        <horizontal_alignment>1</horizontal_alignment>
+        <border_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </border_color>
+      </widget>
+    </widget>
+    <widget type="group" version="2.0.0">
+      <name>1</name>
+      <x>91</x>
+      <width>71</width>
+      <height>22</height>
+      <style>3</style>
+      <transparent>true</transparent>
+      <widget type="textupdate" version="2.0.0">
+        <name>EDM Text Update</name>
+        <pv_name>$(device):SEC</pv_name>
+        <x>46</x>
+        <width>21</width>
+        <height>17</height>
+        <font>
+          <font family="arial" style="BOLD" size="9.900990099009901">
+          </font>
+        </font>
+        <foreground_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </foreground_color>
+        <background_color>
+          <color red="102" green="102" blue="102">
+          </color>
+        </background_color>
+        <transparent>true</transparent>
+        <horizontal_alignment>1</horizontal_alignment>
+        <border_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </border_color>
+      </widget>
+      <widget type="label" version="2.0.0">
+        <name>EDM Label</name>
+        <text>:</text>
+        <x>42</x>
+        <width>6</width>
+        <height>17</height>
+        <font>
+          <font family="arial" style="BOLD" size="9.900990099009901">
+          </font>
+        </font>
+        <foreground_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </foreground_color>
+        <background_color>
+          <color red="102" green="102" blue="102">
+          </color>
+        </background_color>
+        <horizontal_alignment>1</horizontal_alignment>
+        <vertical_alignment>1</vertical_alignment>
+        <border_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </border_color>
+      </widget>
+      <widget type="textupdate" version="2.0.0">
+        <name>EDM Text Update</name>
+        <pv_name>$(device):MIN</pv_name>
+        <x>23</x>
+        <width>21</width>
+        <height>17</height>
+        <font>
+          <font family="arial" style="BOLD" size="9.900990099009901">
+          </font>
+        </font>
+        <foreground_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </foreground_color>
+        <background_color>
+          <color red="102" green="102" blue="102">
+          </color>
+        </background_color>
+        <transparent>true</transparent>
+        <horizontal_alignment>1</horizontal_alignment>
+        <border_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </border_color>
+      </widget>
+      <widget type="label" version="2.0.0">
+        <name>EDM Label</name>
+        <text>:</text>
+        <x>19</x>
+        <width>6</width>
+        <height>17</height>
+        <font>
+          <font family="arial" style="BOLD" size="9.900990099009901">
+          </font>
+        </font>
+        <foreground_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </foreground_color>
+        <background_color>
+          <color red="102" green="102" blue="102">
+          </color>
+        </background_color>
+        <horizontal_alignment>1</horizontal_alignment>
+        <vertical_alignment>1</vertical_alignment>
+        <border_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </border_color>
+      </widget>
+      <widget type="textupdate" version="2.0.0">
+        <name>EDM Text Update</name>
+        <pv_name>$(device):HOUR</pv_name>
+        <width>21</width>
+        <height>17</height>
+        <font>
+          <font family="arial" style="BOLD" size="9.900990099009901">
+          </font>
+        </font>
+        <foreground_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </foreground_color>
+        <background_color>
+          <color red="102" green="102" blue="102">
+          </color>
+        </background_color>
+        <transparent>true</transparent>
+        <horizontal_alignment>1</horizontal_alignment>
+        <border_color>
+          <color red="0" green="192" blue="0">
+          </color>
+        </border_color>
+      </widget>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>EDM Label</name>
+      <text>Time</text>
+      <y>1</y>
+      <width>25</width>
+      <height>12</height>
+      <font>
+        <font family="arial" style="REGULAR" size="9.900990099009901">
+        </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <auto_size>true</auto_size>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):TOTP</pv_name>
+    <x>114</x>
+    <y>82</y>
+    <width>81</width>
+    <height>23</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Monitor: FG" red="96" green="255" blue="96">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color name="Green" red="0" green="255" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):SUMP</pv_name>
+    <x>343</x>
+    <y>82</y>
+    <width>81</width>
+    <height>23</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Monitor: FG" red="96" green="255" blue="96">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color name="Green" red="0" green="255" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>Total Pressure</text>
+    <x>5</x>
+    <y>86</y>
+    <width>71</width>
+    <height>12</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>Sum of Peaks</text>
+    <x>245</x>
+    <y>86</y>
+    <width>68</width>
+    <height>12</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>mbar</text>
+    <x>428</x>
+    <y>86</y>
+    <width>27</width>
+    <height>12</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <auto_size>true</auto_size>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="progressbar" version="2.0.0">
+    <name>EDM progressbar</name>
+    <pv_name>$(device):LOG:M69</pv_name>
+    <x>200</x>
+    <y>391</y>
+    <width>273</width>
+    <height>23</height>
+    <fill_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </fill_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <maximum>0.0</maximum>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M69</pv_name>
+    <x>115</x>
+    <y>391</y>
+    <width>81</width>
+    <height>23</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Monitor: FG" red="96" green="255" blue="96">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <border_color>
+      <color name="Green" red="0" green="255" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update</name>
+    <pv_name>$(device):BAR:M69.DESC</pv_name>
+    <x>32</x>
+    <y>392</y>
+    <width>91</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Grey 75%" red="192" green="192" blue="192">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <format>2</format>
+    <precision>3</precision>
+    <show_units>false</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>EDM Label</name>
+    <text>69:</text>
+    <x>5</x>
+    <y>392</y>
+    <width>24</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="REGULAR" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Text: FG" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="White" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update_1</name>
+    <pv_name>$(device):HEADSTA</pv_name>
+    <x>115</x>
+    <y>444</y>
+    <width>151</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update_2</name>
+    <pv_name>$(device):FIL</pv_name>
+    <x>123</x>
+    <y>486</y>
+    <width>85</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update_3</name>
+    <pv_name>$(device):FILSTA</pv_name>
+    <x>230</x>
+    <y>486</y>
+    <width>46</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>EDM Text Update_4</name>
+    <pv_name>$(device):MLTSTA</pv_name>
+    <x>373</x>
+    <y>486</y>
+    <width>99</width>
+    <height>17</height>
+    <font>
+      <font family="arial" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Monitor: BG" red="64" green="64" blue="64">
+      </color>
+    </background_color>
+    <transparent>true</transparent>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="Mid Green" red="0" green="192" blue="0">
+      </color>
+    </border_color>
+  </widget>
+</display>
