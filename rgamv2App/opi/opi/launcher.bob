@@ -7,16 +7,17 @@
       <action type="open_display">
         <file>rga.bob</file>
         <macros>
-          <device>RGATST</device>
+          <device>RGA1</device>
         </macros>
         <target>replace</target>
         <description>Open Display</description>
       </action>
     </actions>
-    <text>RGA</text>
+    <text>RGA1</text>
     <x>20</x>
     <y>30</y>
     <width>120</width>
     <height>40</height>
+    <tooltip>$(actions)</tooltip>
   </widget>
 </display>

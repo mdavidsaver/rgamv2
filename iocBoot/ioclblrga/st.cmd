@@ -9,7 +9,7 @@
 dbLoadDatabase("../../dbd/lblrga.dbd",0,0)
 lblrga_registerRecordDeviceDriver(pdbbase) 
 
-drvAsynIPPortConfigure("IP", "127.0.0.1:10014", 0, 0, 0)
+drvAsynIPPortConfigure("IP", "192.168.3.10:10014", 0, 0, 0)
 
 mv2init("RGA", "IP")
 
@@ -20,9 +20,6 @@ mv2init("RGA", "IP")
 #asynSetTraceIOMask("IP",0,2)
 
 ## Load record instances
-dbLoadRecords("../../db/rgamv2.template","device=RGATST,PORT=RGA")
+dbLoadRecords("../../db/rgamv2.template","device=RGA1,PORT=RGA")
 
 iocInit()
-
-## Start any sequence programs
-#seq snctest,"user=mdavidsaver"
